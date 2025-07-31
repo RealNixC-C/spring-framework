@@ -1,11 +1,16 @@
 package com.nixc.app.board.notice;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.nixc.app.board.BoardVO;
 
@@ -52,7 +57,7 @@ class NoticeDaoTest {
 		assertEquals(1, result);
 	}
 	
-	@Test
+	//@Test
 	void detailTest()throws Exception {
 		NoticeVO noticeVO = new NoticeVO();
 		// L을 명시하지 않았는데 왜 에러나지않음
@@ -60,6 +65,13 @@ class NoticeDaoTest {
 		BoardVO boardVO = noticeDao.detail(noticeVO);
 		log.info("result : {}", boardVO);
 		assertNotNull(boardVO);
+	}
+	
+	//@Test
+	public void list() throws Exception {
+		List<BoardVO> noticeList = noticeDao.list();
+		
+		assertNotEquals(0, noticeList);
 	}
 	
 

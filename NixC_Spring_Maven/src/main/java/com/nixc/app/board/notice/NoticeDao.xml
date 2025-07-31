@@ -28,5 +28,12 @@
 		DELETE FROM notice
 		WHERE board_no = #{boardNo}
 	</delete>
+	
+	<select id="list" resultType="NoticeVO">
+		SELECT *
+		FROM notice
+		ORDER BY board_no DESC
+	</select>
+	
 </mapper>
 

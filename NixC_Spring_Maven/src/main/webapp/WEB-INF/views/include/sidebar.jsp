@@ -9,7 +9,7 @@
          <div class="sidebar-brand-icon rotate-n-15">
              <i class="fas fa-laugh-wink"></i>
          </div>
-         <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+         <div class="sidebar-brand-text mx-3">스프링 공부<sup></sup></div>
      </a>
 
      <!-- Divider -->
@@ -35,13 +35,13 @@
          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
              aria-expanded="true" aria-controls="collapseTwo">
              <i class="fas fa-fw fa-cog"></i>
-             <span>컴포넌트</span>
+             <span>게시판</span>
          </a>
          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
              <div class="bg-white py-2 collapse-inner rounded">
-                 <h6 class="collapse-header">컴포넌트 커스텀:</h6>
-                 <a class="collapse-item" href="buttons.html">버튼</a>
-                 <a class="collapse-item" href="cards.html">카드</a>
+                 <h6 class="collapse-header">게시판:</h6>
+                 <a class="collapse-item" href="/notice/list">공지사항</a>
+                 <a class="collapse-item" href="cards.html">질문 게시판</a>
              </div>
          </div>
      </li>
@@ -80,7 +80,7 @@
              <i class="fas fa-fw fa-folder"></i>
              <span>페이지</span>
          </a>
-         <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
+         <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
              data-parent="#accordionSidebar">
              <div class="bg-white py-2 collapse-inner rounded">
                  <h6 class="collapse-header">로그인 화면:</h6>

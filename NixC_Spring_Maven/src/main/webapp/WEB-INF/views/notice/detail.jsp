@@ -17,9 +17,22 @@
 		<div id="content-wrapper" class="d-flex flex-column">
 			<div id="content">
 				<c:import url="/WEB-INF/views/include/topbar.jsp"></c:import>
-				<div class="container-fluid">
-					<!-- page content 내용 -->
-					<h1>Index</h1>
+				<div class="container-fluid d-flex justify-content-center" style="margin-top: 100px; height: 600px;">
+					<div class="w-50">
+						<!-- page content 내용 -->
+						<div class="row bg-body-tertiary">
+							<div class="mx-auto h2">${ boardVO.boardTitle }</div>
+						</div>
+						<div class="row">
+							<div class="col-12 h5 d-flex justify-content-between" style="border-bottom: 1px solid grey ">
+								<div>${ boardVO.boardWriter }</div>
+								<div>${ boardVO.boardDate }</div>
+							</div>
+						</div>
+						<div class="mt-3 p-3 bg-light">
+							<div>${ boardVO.boardContent }</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		<!-- End Content -->

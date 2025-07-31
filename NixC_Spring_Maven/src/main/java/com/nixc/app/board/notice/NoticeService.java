@@ -1,0 +1,26 @@
+package com.nixc.app.board.notice;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.nixc.app.board.BoardService;
+import com.nixc.app.board.BoardVO;
+
+@Service
+public class NoticeService implements BoardService{
+
+	@Autowired
+	private NoticeDao noticeDao;
+	
+	@Override
+	public List<BoardVO> list() throws Exception {
+		// TODO Auto-generated method stub
+		return noticeDao.list();
+	}
+
+	public BoardVO detail(BoardVO boardVO) throws Exception {
+		return noticeDao.detail(boardVO);
+	}
+}
