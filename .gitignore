@@ -3,6 +3,7 @@
 
 .vscode
 /src/main/resources/*.properties
+application.properties
 ### Eclipse ###
 .metadata
 bin/
