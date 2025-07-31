@@ -89,8 +89,8 @@
                  <a class="collapse-item" href="forgot-password.html">비밀번호 찾기</a>
                  <div class="collapse-divider"></div>
                  <h6 class="collapse-header">그외 페이지:</h6>
-                 <a class="collapse-item" href="404.html">404 Page</a>
-                 <a class="collapse-item active" href="blank.html">Blank Page</a>
+                 <a class="collapse-item" href="404.html">404 페이지</a>
+                 <a class="collapse-item active" href="blank.html">빈 페이지</a>
              </div>
          </div>
      </li>

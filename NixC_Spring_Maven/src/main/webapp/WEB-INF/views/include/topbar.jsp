@@ -70,7 +70,7 @@
                   </div>
                   <div>
                       <div class="small text-gray-500">December 12, 2019</div>
-                      <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                      <span class="font-weight-bold">연간 계획을 다운로드 할 수 있습니다!</span>
                   </div>
               </a>
               <a class="dropdown-item d-flex align-items-center" href="#">
@@ -81,7 +81,7 @@
                   </div>
                   <div>
                       <div class="small text-gray-500">December 7, 2019</div>
-                      $290.29 has been deposited into your account!
+                      300,000원이 계좌로 입금되었습니다.
                   </div>
               </a>
               <a class="dropdown-item d-flex align-items-center" href="#">
