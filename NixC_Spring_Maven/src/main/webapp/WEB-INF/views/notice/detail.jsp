@@ -32,6 +32,13 @@
 						<div class="mt-3 p-3 bg-light">
 							<div>${ boardVO.boardContent }</div>
 						</div>
+						<div>
+							<form id="frm">
+								<input type="hidden" name="boardNo" value="${ boardVO.boardNo }">
+							</form>
+							<button class="btn btn-outline-success action" data-kind="u">수정</button>
+							<button class="btn btn-outline-danger action" data-kind="d">삭제</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -44,5 +51,6 @@
 	
 	<!-- Modal, JS -->
 	<c:import url="/WEB-INF/views/include/tail.jsp"></c:import>
+	<script type="text/javascript" src="/js/board/board_detail.js"></script>
 </body>
 </html>

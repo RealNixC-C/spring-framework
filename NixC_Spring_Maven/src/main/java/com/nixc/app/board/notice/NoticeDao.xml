@@ -19,9 +19,9 @@
 	</insert>
 	<update id="update" parameterType="NoticeVO">
 		UPDATE notice
-		SET board_title = #{boardTitle}, board_content = #{boardContent}
+		SET board_title = #{boardTitle}, board_content = #{boardContent}, board_writer = #{boardWriter}
 		<where>
-			board_no = 3;
+			board_no = #{boardNo};
 		</where>
 	</update>
 	<delete id="delete" parameterType="NoticeVO">
@@ -34,6 +34,11 @@
 		FROM notice
 		ORDER BY board_no DESC
 	</select>
+	
+	<insert id="add" parameterType="NoticeVO">
+		INSERT INTO notice (board_title, board_content, board_writer, board_date, board_hit)
+		VALUES (#{boardTitle}, #{boardContent}, #{boardWriter}, now(), 0);
+	</insert>
 	
 </mapper>
 

@@ -14,11 +14,11 @@ import lombok.ToString;
 @Component
 public class BoardVO {
 
-	private long boardNo;
+	private Long boardNo;
 	private String boardTitle;
 	private String boardContent;
 	private String boardWriter;
 	private LocalDateTime boardDate;
-	private long boardHit;
+	private Long boardHit;
 	
 }

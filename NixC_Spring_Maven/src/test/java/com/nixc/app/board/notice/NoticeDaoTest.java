@@ -29,7 +29,7 @@ class NoticeDaoTest {
 		noticeVO.setBoardTitle("title3");
 		noticeVO.setBoardContent("content3");
 		noticeVO.setBoardWriter("writer3");
-		int result = noticeDao.insert(noticeVO);
+		int result = noticeDao.add(noticeVO);
 		
 		// 단정문
 		assertEquals(0, result);

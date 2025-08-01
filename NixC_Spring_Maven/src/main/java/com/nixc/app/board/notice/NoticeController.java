@@ -15,9 +15,15 @@ import com.nixc.app.board.BoardVO;
 @Controller
 @RequestMapping(value="/notice/*")
 public class NoticeController {
+
+    private final BoardVO boardVO;
 	
 	@Autowired
 	private NoticeService noticeService;
+
+    NoticeController(BoardVO boardVO) {
+        this.boardVO = boardVO;
+    }
 	
 	@GetMapping("list")
 	public String list(Model model) throws Exception {
@@ -35,6 +41,52 @@ public class NoticeController {
 		
 		model.addAttribute("boardVO", boardVO);
 		return "notice/detail";
+	}
+	
+	@GetMapping("add")
+	public String add() throws Exception {
+		
+		return "notice/add";
+	}
+	
+	@PostMapping("add")
+	public String add(NoticeVO noticeVO) throws Exception {
+		int result = noticeService.add(noticeVO);
+		
+		return "redirect:./list";
+	}
+	
+	@GetMapping("update")
+	public String update(Model model, BoardVO noticeVO) throws Exception {
+		BoardVO boardVO = noticeService.detail(noticeVO);
+		model.addAttribute("boardVO", boardVO);
+		
+		return "notice/add";
+	}
+	
+	@PostMapping("update")
+	public String update(Model model, NoticeVO noticeVO) throws Exception{
+		int result = noticeService.update(noticeVO);
+		
+		String msg = "수정 실패";
+		if(result > 0) {
+			msg = "수정 성공";
+		}
+		String url="./detail?boardNo="+noticeVO.getBoardNo();
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		
+		return "commons/result";       // "redirect:./detail?boardNo="+noticeVO.getBoardNo();
+		
+	}
+	
+	@PostMapping
+	public String delete(NoticeVO noticeVO) throws Exception {
+		int result = noticeService.delete(noticeVO);
+		
+		return "redirect:list";
 	}
 	
 }
