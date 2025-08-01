@@ -24,7 +24,7 @@
 							<div class="mx-auto h2">${ boardVO.boardTitle }</div>
 						</div>
 						<div class="row">
-							<div class="col-12 h5 d-flex justify-content-between" style="border-bottom: 1px solid grey ">
+							<div class="col-12 h5 d-flex justify-content-between">
 								<div>${ boardVO.boardWriter }</div>
 								<div>${ boardVO.boardDate }</div>
 							</div>

@@ -16,10 +16,10 @@ public class NoticeService implements BoardService{
 	
 	@Override
 	public List<BoardVO> list() throws Exception {
-		// TODO Auto-generated method stub
 		return noticeDao.list();
 	}
 
+	@Override
 	public BoardVO detail(BoardVO boardVO) throws Exception {
 		return noticeDao.detail(boardVO);
 	}
