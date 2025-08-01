@@ -23,8 +23,12 @@ for(a of buttons) {
 		let kind = k.getAttribute("data-kind");
 		console.log(kind)
 		if(kind=='d') {
-			frm.setAttribute("method", "POST");
-			frm.setAttribute("action", "./delete");
+			if (confirm("삭제하시겠습니까?")) {
+				frm.setAttribute("method", "POST");
+				frm.setAttribute("action", "./delete");
+			} else {
+				return;
+			}
 		} else {
 			frm.setAttribute("method", "GET");
 			frm.setAttribute("action", "./update");

@@ -69,24 +69,29 @@ public class NoticeController {
 		int result = noticeService.update(noticeVO);
 		
 		String msg = "수정 실패";
+		String url="./detail?boardNo="+noticeVO.getBoardNo();
 		if(result > 0) {
 			msg = "수정 성공";
 		}
-		String url="./detail?boardNo="+noticeVO.getBoardNo();
-		
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		
-		
-		return "commons/result";       // "redirect:./detail?boardNo="+noticeVO.getBoardNo();
-		
+		return "commons/result";   // "redirect:./detail?boardNo="+noticeVO.getBoardNo();
 	}
 	
 	@PostMapping
-	public String delete(NoticeVO noticeVO) throws Exception {
+	public String delete(Model model, NoticeVO noticeVO) throws Exception {
 		int result = noticeService.delete(noticeVO);
 		
-		return "redirect:list";
+		String msg = "삭제 실패";
+		String url = "./list";
+		if(result > 0) { 
+			msg = "삭제 성공";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "commons/result";
 	}
 	
 }

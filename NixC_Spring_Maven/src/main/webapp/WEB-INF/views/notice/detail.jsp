@@ -30,7 +30,8 @@
 							</div>
 						</div>
 						<div class="mt-3 p-3 bg-light">
-							<div>${ boardVO.boardContent }</div>
+							<pre><c:out value="${ boardVO.boardContent }"/></pre>
+<%-- 							<div><c:out value="${ boardVO.boardContent }"/></div> --%>
 						</div>
 						<div>
 							<form id="frm">
