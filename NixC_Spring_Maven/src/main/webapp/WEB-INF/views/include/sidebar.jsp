@@ -5,7 +5,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
            <!-- Sidebar - Brand -->
-     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/WEB-INF/views/index.jsp">
          <div class="sidebar-brand-icon rotate-n-15">
              <i class="fas fa-laugh-wink"></i>
          </div>
@@ -41,7 +41,7 @@
              <div class="bg-white py-2 collapse-inner rounded">
                  <h6 class="collapse-header">게시판:</h6>
                  <a class="collapse-item" href="/notice/list">공지사항</a>
-                 <a class="collapse-item" href="cards.html">질문 게시판</a>
+                 <a class="collapse-item" href="/products/list">질문 게시판</a>
              </div>
          </div>
      </li>

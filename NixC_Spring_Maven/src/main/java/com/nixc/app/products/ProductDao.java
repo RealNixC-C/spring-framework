@@ -1,0 +1,12 @@
+package com.nixc.app.products;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface ProductDao {
+
+	public List<ProductVO> list() throws Exception;
+	public ProductVO detail(ProductVO productVO) throws Exception;
+}

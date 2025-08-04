@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,9 +18,30 @@
 		<div id="content-wrapper" class="d-flex flex-column">
 			<div id="content">
 				<c:import url="/WEB-INF/views/include/topbar.jsp"></c:import>
-				<div class="container-fluid">
-					<!-- page content 내용 -->
-					<h1>Products Detail</h1>
+				<div class="container-fluid d-flex justify-content-center" style="margin-top: 100px; height: 600px;">
+					<div class="w-50">
+						<!-- page content 내용 -->
+						<div class="row bg-body-tertiary">
+							<div class="mx-auto h2">${ productVO.productName }</div>
+						</div>
+						<div class="row">
+							<div class="col-12 h5 d-flex justify-content-between">
+								<div>${ productVO.productKindVO.kindName }</div>
+								<div><c:out value="${ fn:substring(productVO.productDate, 0, 10) }"/></div>
+							</div>
+						</div>
+						<div class="mt-3 p-3 bg-light">
+						<%--<pre><c:out value="${ productVO.productContent }"/></pre> --%>
+							<div><c:out value="${ productVO.productContent }"/></div>
+						</div>
+						<div>
+							<form id="frm">
+								<input type="hidden" name="boardNo" value="${ productVO.productNo }">
+							</form>
+							<button class="btn btn-outline-success action" data-kind="u">수정</button>
+							<button class="btn btn-outline-danger action" data-kind="d">삭제</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		<!-- End Content -->
@@ -31,5 +53,6 @@
 	
 	<!-- Modal, JS -->
 	<c:import url="/WEB-INF/views/include/tail.jsp"></c:import>
+	<script type="text/javascript" src="/js/board/board_detail.js"></script>
 </body>
 </html>

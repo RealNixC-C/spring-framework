@@ -1,0 +1,20 @@
+package com.nixc.app.products;
+
+import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Setter
+@Getter
+@ToString
+public class ProductKindVO {
+
+	private Long kindNo;
+	private String kindName;
+	
+	// 1:N
+    // private List<ProductVO> list;
+	
+}
