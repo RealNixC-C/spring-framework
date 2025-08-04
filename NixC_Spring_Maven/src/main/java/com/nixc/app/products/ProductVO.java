@@ -1,6 +1,6 @@
 package com.nixc.app.products;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.springframework.stereotype.Component;
 
@@ -18,7 +18,7 @@ public class ProductVO {
 	private Long kindNo;
 	private String productName;
 	private String productContent;
-	private LocalDateTime productDate;
+	private LocalDate productDate;
 	private Double productRate;
 	
 	// 1:1

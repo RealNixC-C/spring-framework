@@ -31,5 +31,15 @@
 		WHERE product_no = #{productNo};
 	</select>
 		
+	<insert id="add" parameterType="ProductVO">
+		INSERT INTO products(product_no, kind_no, product_name, product_content, product_date, product_rate)
+		VALUES (null, #{kindNo}, #{productName}, #{productContent}, #{productDate}, #{productRate})
+	</insert>
+	
+	<update id="update">
+		UPDATE products
+		SET kind_no = #{kindNo}, product_name = #{productName}, product_content = #{productContent}, product_rate = #{productRate}
+		WHERE product_no = #{productNo};
+	</update>
 </mapper>
 

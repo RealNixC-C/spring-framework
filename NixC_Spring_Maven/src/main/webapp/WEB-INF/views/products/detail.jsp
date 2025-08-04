@@ -36,7 +36,7 @@
 						</div>
 						<div>
 							<form id="frm">
-								<input type="hidden" name="boardNo" value="${ productVO.productNo }">
+								<input type="hidden" name="productNo" value="${ productVO.productNo }">
 							</form>
 							<button class="btn btn-outline-success action" data-kind="u">수정</button>
 							<button class="btn btn-outline-danger action" data-kind="d">삭제</button>
@@ -53,6 +53,6 @@
 	
 	<!-- Modal, JS -->
 	<c:import url="/WEB-INF/views/include/tail.jsp"></c:import>
-	<script type="text/javascript" src="/js/board/board_detail.js"></script>
+	<script type="text/javascript" src="/js/product/product_detail.js"></script>
 </body>
 </html>
