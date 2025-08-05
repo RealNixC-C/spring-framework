@@ -2,7 +2,9 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,windows,eclipse,maven
 
 .vscode
-
+/src/main/resources/*.properties
+application.properties
+.mvn/wrapper
 ### Eclipse ###
 .metadata
 bin/
