@@ -4,5 +4,54 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <!-- namespace의 이름은 사용하려는 DAO의 풀패키지명과 동일하게 작성 -->
-<mapper namespace="sample"></mapper>
+<mapper namespace="sample">
+	<insert id="" parameterType="vo">
+		INSERT ...
+		VALUE (#{vo의 getter의 이름},?)
+	</insert>
+	
+	<insert id="" parameterType="String">
+		INSERT ....
+		VALUES (#{변수명-> name})
+	</insert>
+	
+	<insert id="" parameterType="Map">
+		INSERT ....
+		VALUE (#{map의 key}, ?)
+	</insert>
+	
+	<insert id="" parameterType="List">
+		INSERT ....
+		VALUE (#{index번호}, ?)
+	</insert>
+	
+	<select id="" resultType="VO">
+		<!--  컬럼명과 VO의 setter의 이름이 일치 -->
+	</select>
+	
+	<select id="" resultType="Map">
+		<!--  컬럼명이 Key, 값이 Value -->
+	</select>
+	
+	<select id="" resultType="VO">
+		<!--  컬럼명과 VO의 setter의 이름이 일치하지 않을 경우 -->
+		<!-- 별칭 -->
+		SELECT board_num AS boardNum FROM notice
+	</select>
+	
+	<select id="" resultMap="resultMap의 ID">
+		<!--  컬럼명과 VO의 setter의 이름이 일치하지 않을 경우 -->
+		<!-- 별칭 -->
+		SELECT board_num AS boardNum FROM notice
+	</select>
+	
+	<resultMap type="VO" id="">
+		<!-- PK -->
+		<id column="컬럼명" property="VO의 setter의 이름"/>
+		<!-- 일반 컬럼 -->		
+		<result column="컬럼명" property="VO의 setter의 이름"/>
+	</resultMap>
+	
+	
+</mapper>
 
