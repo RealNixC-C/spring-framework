@@ -2,8 +2,8 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,windows,eclipse,maven
 
 .vscode
-/src/main/resources/*.properties
-application.properties
+NixC_Spring_Maven/src/main/resources/application.properties
+
 ### Eclipse ###
 .metadata
 bin/
