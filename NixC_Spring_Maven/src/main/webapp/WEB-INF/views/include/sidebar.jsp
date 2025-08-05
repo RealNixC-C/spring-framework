@@ -42,6 +42,7 @@
                  <h6 class="collapse-header">게시판:</h6>
                  <a class="collapse-item" href="/notice/list">공지사항</a>
                  <a class="collapse-item" href="/products/list">상품</a>
+                 <a class="collapse-item" href="/qna/list">질문게시판</a>
              </div>
          </div>
      </li>

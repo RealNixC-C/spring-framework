@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.nixc.app.board.qna.QnaDao">
+
+	<select id="list" resultType="QnaVO">
+	 	SELECT * FROM qna
+		ORDER BY board_ref DESC, board_step ASC
+	</select>
+  
+	<insert id="add" parameterType="QnaVO" useGeneratedKeys="true" keyProperty="boardNo">
+		INSERT INTO qna(board_no, board_title, board_content, board_writer, board_date, board_hit, board_ref, board_step, board_depth)
+		VALUES
+		(NULL, #{boardTitle}, #{boardContent}, #{boardWriter}, now(), 0, 0, 0, 0)
+	</insert>
+	
+	<update id="refUpdate" parameterType="QnaVO">	
+		UPDATE QNA
+		SET board_ref = #{boardNo}
+		WHERE board_no = #{boardNo}
+	</update>
+  
+</mapper>
+

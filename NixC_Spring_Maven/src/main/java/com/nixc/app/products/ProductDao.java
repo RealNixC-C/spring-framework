@@ -11,4 +11,5 @@ public interface ProductDao {
 	public ProductVO detail(ProductVO productVO) throws Exception;
 	public int add(ProductVO productVO) throws Exception;
 	public int update(ProductVO productVO) throws Exception;
+	public int delete(ProductVO productVO) throws Exception;
 }

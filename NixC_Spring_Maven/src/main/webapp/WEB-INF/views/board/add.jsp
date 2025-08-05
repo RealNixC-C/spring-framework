@@ -34,7 +34,9 @@
 								<label for="boardContent">내용</label>
 								<textarea class="form-control" name="boardContent" id="boardContent" rows="15" cols="40">${ boardVO.boardContent }</textarea>
 							</div>
-							<button class="btn btn-primary" type="submit">등록</button>
+							<div class="col-md-12 mb-3">
+								<button class="btn btn-primary" type="submit">등록</button>
+							</div>
 						</form>
 					</div>
 				</div>

@@ -32,7 +32,7 @@ public class NoticeController {
 		// request와 라이프사이클이 동일한 Spring의 모델 객체 사용, jsp단에서 동일하게 el을 사용하면됨
 		model.addAttribute("list", list);
 		
-		return "notice/list";
+		return "board/list";
 	}
 
 	@GetMapping("detail")
@@ -40,13 +40,13 @@ public class NoticeController {
 		BoardVO boardVO = noticeService.detail(noticeVo);
 		
 		model.addAttribute("boardVO", boardVO);
-		return "notice/detail";
+		return "board/detail";
 	}
 	
 	@GetMapping("add")
 	public String add() throws Exception {
 		
-		return "notice/add";
+		return "board/add";
 	}
 	
 	@PostMapping("add")
@@ -61,7 +61,7 @@ public class NoticeController {
 		BoardVO boardVO = noticeService.detail(noticeVO);
 		model.addAttribute("boardVO", boardVO);
 		
-		return "notice/add";
+		return "board/add";
 	}
 	
 	@PostMapping("update")

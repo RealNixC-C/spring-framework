@@ -12,11 +12,11 @@
   	</select>
   
 	<!-- ID는 DAO의 메서드명과 동일하게 작성 -->
-	<insert id="insert" parameterType="NoticeVO">
-		INSERT INTO notice(board_no, board_title, board_content, board_writer, board_date, board_hit)
-		VALUES
-		(NULL, #{boardTitle}, #{boardContent}, #{boardWriter}, now(), 0)
+	<insert id="add" parameterType="NoticeVO">
+		INSERT INTO notice (board_title, board_content, board_writer, board_date, board_hit)
+		VALUES (#{boardTitle}, #{boardContent}, #{boardWriter}, now(), 0);
 	</insert>
+	
 	<update id="update" parameterType="NoticeVO">
 		UPDATE notice
 		SET board_title = #{boardTitle}, board_content = #{boardContent}, board_writer = #{boardWriter}
@@ -34,11 +34,7 @@
 		FROM notice
 		ORDER BY board_no DESC
 	</select>
-	
-	<insert id="add" parameterType="NoticeVO">
-		INSERT INTO notice (board_title, board_content, board_writer, board_date, board_hit)
-		VALUES (#{boardTitle}, #{boardContent}, #{boardWriter}, now(), 0);
-	</insert>
+
 	
 </mapper>
 

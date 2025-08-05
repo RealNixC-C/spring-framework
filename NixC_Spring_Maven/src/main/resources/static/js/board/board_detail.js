@@ -19,7 +19,7 @@ for(a of buttons) {
 				return;
 			}
 		} else {
-			frm.setAttribute("method", "GET");
+			frm.setAttribute("method", "POST");
 			frm.setAttribute("action", "./update");
 		}
 		
