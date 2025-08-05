@@ -9,5 +9,5 @@ import com.nixc.app.board.BoardVO;
 public interface QnaDao extends BoardDao{
 
 	public int refUpdate(BoardVO BoardVO) throws Exception;
-	
+	public int replyUpdate(QnaVO qnaVO) throws Exception;
 }

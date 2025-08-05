@@ -48,6 +48,30 @@ public class QnaController {
 		return "commons/result";
 	}
 	
+	@GetMapping("reply")
+	public String reply(Model model, QnaVO qnaVO) throws Exception {
+		model.addAttribute("qnaVO", qnaVO);
+		
+		return "board/add";
+	}
+	
+	@PostMapping("reply")
+	public String reply(QnaVO qnaVO) throws Exception {
+		
+		
+		
+		return "board/add";
+	}
+	
+	@GetMapping("detail")
+	public String detail(Model model, BoardVO boardVO) throws Exception {
+		
+		BoardVO result = qnaService.detail(boardVO);
+		
+		model.addAttribute("boardVO", result);
+		return "board/detail";
+	}
+	
 	
 	
 	

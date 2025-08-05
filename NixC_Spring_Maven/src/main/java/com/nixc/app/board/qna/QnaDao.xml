@@ -12,8 +12,7 @@
   
 	<insert id="add" parameterType="QnaVO" useGeneratedKeys="true" keyProperty="boardNo">
 		INSERT INTO qna(board_no, board_title, board_content, board_writer, board_date, board_hit, board_ref, board_step, board_depth)
-		VALUES
-		(NULL, #{boardTitle}, #{boardContent}, #{boardWriter}, now(), 0, 0, 0, 0)
+		VALUES (NULL, #{boardTitle}, #{boardContent}, #{boardWriter}, now(), 0, #{boardRef}, #{boardStep}, #{boardDepth})
 	</insert>
 	
 	<update id="refUpdate" parameterType="QnaVO">	
@@ -21,6 +20,19 @@
 		SET board_ref = #{boardNo}
 		WHERE board_no = #{boardNo}
 	</update>
+	
+	<update id="replyUpdate" parameterType="QnaVO">
+		UPDATE qna
+		SET board_step = board_step + 1
+		WHERE board_ref = #{boardRef} AND board_step > #{boardStep} 
+	</update>
+	
+	<select id="detail" parameterType="boardVO" resultType="QnaVO">
+		SELECT *
+		FROM qna
+		WHERE board_no = #{boardNo}
+	</select>
+	
   
 </mapper>
 

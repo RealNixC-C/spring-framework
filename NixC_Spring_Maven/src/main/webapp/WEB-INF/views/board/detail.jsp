@@ -39,6 +39,7 @@
 							</form>
 							<button class="btn btn-outline-success action" data-kind="u">수정</button>
 							<button class="btn btn-outline-danger action" data-kind="d">삭제</button>
+							<button class="btn btn-outline-info action" data-kind="r">답글</button>
 						</div>
 					</div>
 				</div>

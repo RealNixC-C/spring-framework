@@ -18,9 +18,11 @@ for(a of buttons) {
 			} else {
 				return;
 			}
-		} else {
+		} else if(kind == 'u'){
 			frm.setAttribute("method", "POST");
 			frm.setAttribute("action", "./update");
+		} else {
+			frm.setAttribute("action", "./reply")
 		}
 		
 		frm.submit();
