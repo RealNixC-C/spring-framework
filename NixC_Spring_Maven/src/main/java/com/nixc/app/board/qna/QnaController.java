@@ -3,9 +3,11 @@ package com.nixc.app.board.qna;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -17,6 +19,14 @@ public class QnaController {
 
 	@Autowired
 	private QnaService qnaService;
+	
+	@Value("${board.qna}")
+	private String name;
+	
+	@ModelAttribute("board")
+	public String getBoard() {
+		return "QnA";
+	}
 	
 	@GetMapping("list")
 	public String list(Model model) throws Exception {
@@ -58,9 +68,14 @@ public class QnaController {
 	@PostMapping("reply")
 	public String reply(QnaVO qnaVO) throws Exception {
 		
+		int result = qnaService.reply(qnaVO);
+//		String msg = "등록 실패";
+//		String url = "./detail?boardNo=" + qnaVO.getBoardNo();
+//		if(result > 0) {
+//			msg = "등록 성공";
+//		}
 		
-		
-		return "board/add";
+		return "redirect:./list";
 	}
 	
 	@GetMapping("detail")
@@ -72,7 +87,20 @@ public class QnaController {
 		return "board/detail";
 	}
 	
-	
+	public String delete(Model model, BoardVO boardVO) throws Exception {
+		
+		int result = qnaService.delete(boardVO);
+		
+		String msg = "삭제 실패";
+		String url = "./list";
+		if(result > 0) {
+			msg = "삭제 성공";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "commons/result";
+	}
 	
 	
 	

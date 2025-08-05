@@ -15,9 +15,7 @@ for(a of buttons) {
 			if (confirm("삭제하시겠습니까?")) {
 				frm.setAttribute("method", "POST");
 				frm.setAttribute("action", "./delete");
-			} else {
-				return;
-			}
+			} 
 		} else if(kind == 'u'){
 			frm.setAttribute("method", "POST");
 			frm.setAttribute("action", "./update");

@@ -29,10 +29,8 @@ public class QnaService implements BoardService{
 		qnaVO.setBoardRef(parent.getBoardRef());
 		qnaVO.setBoardStep(parent.getBoardStep()+1);
 		qnaVO.setBoardDepth(parent.getBoardDepth()+1);
-		int result = qnaDao.replyUpdate(parent);
-		if(result > 0) {
-			qnaDao.add(qnaVO);
-		}
+		qnaDao.replyUpdate(parent);
+		int result = qnaDao.add(qnaVO);
 		return result;
 	}
 	

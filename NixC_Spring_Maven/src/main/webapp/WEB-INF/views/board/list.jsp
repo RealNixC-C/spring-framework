@@ -21,6 +21,7 @@
 				<div class="container-fluid">
 					<!-- page content 내용 -->
 					<div class="row col-md-8 offset-md-2 ">
+						<h2>${ board }</h2>
 						<table class="table">
 							<thead>
 								<tr class="table-primary">
@@ -36,7 +37,13 @@
 									<tr>
 										<td>${ l.boardNo }</td>
 										<td>${ l.boardWriter }</td>
-										<td><a href="./detail?boardNo=${ l.boardNo }">${ l.boardTitle }</a></td>
+										<td>
+										<c:catch>
+										<c:forEach begin="1" end="${ l.boardDepth }" varStatus="vs">&nbsp;&nbsp;
+										<c:if test="${vs.last}">ㄴ</c:if>
+										</c:forEach>
+										</c:catch>
+										<a href="./detail?boardNo=${ l.boardNo }">${ l.boardTitle }</a></td>
 										<td>${ l.boardDate }</td>
 										<td>${ l.boardHit }</td>
 									</tr>

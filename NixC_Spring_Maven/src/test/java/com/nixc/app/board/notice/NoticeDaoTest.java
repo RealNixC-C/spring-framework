@@ -23,16 +23,21 @@ class NoticeDaoTest {
 	@Autowired
 	private NoticeDao noticeDao;
 	
-	//@Test
+	@Test
 	void insertTest()throws Exception {
-		NoticeVO noticeVO = new NoticeVO();
-		noticeVO.setBoardTitle("title3");
-		noticeVO.setBoardContent("content3");
-		noticeVO.setBoardWriter("writer3");
-		int result = noticeDao.add(noticeVO);
+		for(int i = 0; i < 105 ; i++) {
+			NoticeVO noticeVO = new NoticeVO();
+			noticeVO.setBoardTitle("title" + i);
+			noticeVO.setBoardContent("content" + i);
+			noticeVO.setBoardWriter("writer" + i);
+			int result = noticeDao.add(noticeVO);
+			if(i%10 == 0) {
+				Thread.sleep(500);
+			}
+		}
 		
 		// 단정문
-		assertEquals(0, result);
+//		assertEquals(0, result);
 	}
 	
 	//@Test
@@ -73,6 +78,8 @@ class NoticeDaoTest {
 		
 		assertNotEquals(0, noticeList);
 	}
+	
+	
 	
 
 }

@@ -20,6 +20,7 @@
 				<div class="container-fluid d-flex justify-content-center" style="margin-top: 100px; height: 600px;">
 					<div class="w-50">
 						<!-- page content 내용 -->
+						<div><h2>${ board }</h2></div>
 						<div class="row bg-body-tertiary">
 							<div class="mx-auto h2">${ boardVO.boardTitle }</div>
 						</div>
@@ -39,7 +40,9 @@
 							</form>
 							<button class="btn btn-outline-success action" data-kind="u">수정</button>
 							<button class="btn btn-outline-danger action" data-kind="d">삭제</button>
-							<button class="btn btn-outline-info action" data-kind="r">답글</button>
+							<c:if test="${ board ne 'notice' }">
+								<button class="btn btn-outline-info action" data-kind="r">답글</button>
+							</c:if>
 						</div>
 					</div>
 				</div>

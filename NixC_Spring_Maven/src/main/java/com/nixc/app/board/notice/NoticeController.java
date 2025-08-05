@@ -1,12 +1,13 @@
 package com.nixc.app.board.notice;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,13 +17,15 @@ import com.nixc.app.board.BoardVO;
 @RequestMapping(value="/notice/*")
 public class NoticeController {
 
-    private final BoardVO boardVO;
-	
 	@Autowired
 	private NoticeService noticeService;
 
-    NoticeController(BoardVO boardVO) {
-        this.boardVO = boardVO;
+    @Value("${board.notice}")
+    private String name;
+    
+    @ModelAttribute("board")
+    public String getBoard() {
+    	return name;
     }
 	
 	@GetMapping("list")
