@@ -35,10 +35,9 @@
 <%-- 							<div><c:out value="${ boardVO.boardContent }"/></div> --%>
 						</div>
 						<div>
+							<h2>첨부파일</h2>
+							<div><a href="/files/${ board }/${boardVO.boardFileVO.saveName}">${ boardVO.boardFileVO.saveName }</a></div>
 							<div>${ boardVO.boardFileVO.oriName }</div>
-						</div>
-						<div>
-							<div>${ boardVO.boardFileVO.saveName }</div>
 						</div>
 						<div>
 							<form id="frm">

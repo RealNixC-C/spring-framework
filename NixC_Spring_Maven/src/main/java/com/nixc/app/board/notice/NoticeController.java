@@ -37,7 +37,7 @@ public class NoticeController {
 	public String list(Model model, Pager pager, MultipartFile attaches) throws Exception {
 		
 		List<BoardVO> list = noticeService.list(pager);
-		// request와 라이프사이클이 동일한 Spring의 모델 객체 사용, jsp단에서 동일하게 el을 사용하면됨
+		
 		model.addAttribute("list", list);
 		model.addAttribute("pager", pager);
 		

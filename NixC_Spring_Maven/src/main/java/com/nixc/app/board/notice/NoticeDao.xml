@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.nixc.app.board.notice.NoticeDao">
-  	<resultMap type="NoticeVO" id="noticeResult">
+  	<resultMap type="NoticeVO" id="noticeResultMap">
   		<id column="board_no" property="boardNo"/>
   		<result column="board_title" property="boardTitle"/>
   		<result column="board_content" property="boardContent"/>
@@ -19,7 +19,7 @@
   		</association>
   	</resultMap>
   	
-  	<select id="detail" parameterType="NoticeVO" resultMap="noticeResult">
+  	<select id="detail" parameterType="NoticeVO" resultMap="noticeResultMap">
   		SELECT *
   		FROM notice n
   		LEFT JOIN notice_files nf USING(board_no)

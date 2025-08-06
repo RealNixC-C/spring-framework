@@ -5,14 +5,38 @@
   
 <mapper namespace="com.nixc.app.board.qna.QnaDao">
 
-	<select id="list" resultType="QnaVO">
+	<resultMap type="QnaVO" id="qnaResultMap">
+		<id column="board_no" property="boardNo"/>
+		<result column="board_title" property="boardTitle"/>
+		<result column="board_content" property="boardContent"/>
+		<result column="board_writer" property="boardWriter"/>
+		<result column="board_date" property="boardDate"/>
+		<result column="board_hit" property="boardHit"/>
+		<result column="board_ref" property="boardRef"/>
+		<result column="board_step" property="boardStep"/>
+		<result column="board_depth" property="boardDepth"/>
+		<association property="boardFileVO" javaType="BoardFileVO">
+			<id column="file_no" property="fileNo"/>
+			<result column="board_no" property="boardNo"/>
+			<result column="ori_name" property="oriName"/>
+			<result column="save_name" property="saveName"/>
+		</association>
+	</resultMap>
+
+	<select id="list" resultType="QnaVO" parameterType="Pager">
 	 	SELECT * FROM qna
 		ORDER BY board_ref DESC, board_step ASC
+		LIMIT #{endIndex} OFFSET #{startIndex}
 	</select>
   
 	<insert id="add" parameterType="QnaVO" useGeneratedKeys="true" keyProperty="boardNo">
 		INSERT INTO qna(board_no, board_title, board_content, board_writer, board_date, board_hit, board_ref, board_step, board_depth)
 		VALUES (NULL, #{boardTitle}, #{boardContent}, #{boardWriter}, now(), 0, #{boardRef}, #{boardStep}, #{boardDepth})
+	</insert>
+	
+	<insert id="addFile">
+		INSERT INTO qna_files (file_no, board_no, ori_name, save_name)
+		VALUES (null, #{boardNo}, #{oriName}, #{saveName})
 	</insert>
 	
 	<update id="refUpdate" parameterType="QnaVO">	
@@ -27,8 +51,11 @@
 		WHERE board_ref = #{boardRef} AND board_step > #{boardStep} 
 	</update>
 	
-	<select id="detail" parameterType="boardVO" resultType="QnaVO">
-		SELECT * FROM qna WHERE board_no = #{boardNo}
+	<select id="detail" parameterType="boardVO" resultMap="qnaResultMap">
+		SELECT *
+		FROM qna q
+		LEFT JOIN qna_files qf USING (board_no)
+		WHERE board_no = #{boardNo}
 	</select>
 	
 	<select id="totalCount" resultType="Long">

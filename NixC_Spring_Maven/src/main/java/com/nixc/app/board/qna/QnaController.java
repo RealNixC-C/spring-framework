@@ -50,14 +50,13 @@ public class QnaController {
 	
 	@PostMapping("add")
 	public String add(Model model, QnaVO qnaVo, MultipartFile attaches) throws Exception {
-		log.info("{}", attaches);
-//		int result = qnaService.add(qnaVo);
+		int result = qnaService.add(qnaVo, attaches);
 		
 		String msg = "등록 실패";
 		String url = "./list";
-//		if(result > 0) {
-//			msg = "등록 성공";
-//		}
+		if(result > 0) {
+			msg = "등록 성공";
+		}
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		
@@ -88,6 +87,7 @@ public class QnaController {
 	public String detail(Model model, BoardVO boardVO) throws Exception {
 		
 		BoardVO result = qnaService.detail(boardVO);
+//		System.out.println(result.getBoardFileVO().toString());
 		
 		model.addAttribute("boardVO", result);
 		return "board/detail";
