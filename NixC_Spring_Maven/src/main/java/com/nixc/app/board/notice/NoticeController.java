@@ -10,12 +10,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.nixc.app.board.BoardVO;
 import com.nixc.app.commons.Pager;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping(value="/notice/*")
+@Slf4j
 public class NoticeController {
 
 	@Autowired
@@ -30,7 +34,7 @@ public class NoticeController {
     }
 	
 	@GetMapping("list")
-	public String list(Model model, Pager pager) throws Exception {
+	public String list(Model model, Pager pager, MultipartFile attaches) throws Exception {
 		
 		List<BoardVO> list = noticeService.list(pager);
 		// request와 라이프사이클이 동일한 Spring의 모델 객체 사용, jsp단에서 동일하게 el을 사용하면됨
@@ -55,8 +59,8 @@ public class NoticeController {
 	}
 	
 	@PostMapping("add")
-	public String add(NoticeVO noticeVO) throws Exception {
-		int result = noticeService.add(noticeVO);
+	public String add(NoticeVO noticeVO, MultipartFile attaches) throws Exception {
+		int result = noticeService.add(noticeVO, attaches);
 		
 		return "redirect:./list";
 	}

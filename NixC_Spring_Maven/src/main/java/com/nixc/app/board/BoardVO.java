@@ -21,4 +21,5 @@ public class BoardVO {
 	private LocalDateTime boardDate;
 	private Long boardHit;
 	
+	private BoardFileVO boardFileVO;
 }

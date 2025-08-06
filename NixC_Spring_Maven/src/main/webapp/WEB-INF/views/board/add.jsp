@@ -20,7 +20,7 @@
 				<div class="container-fluid">
 					<div class="w-75 mx-auto">
 						<!-- page content 내용 -->
-						<form method="post" action="">
+						<form method="post" action="" enctype="multipart/form-data">
 							<input type="hidden" name="boardNo" value="${ boardVO.boardNo }">
 							<div class="col-md-12 mb-3">
 								<label for="boardWriter">작성자</label>
@@ -33,6 +33,9 @@
 							<div class="col-md-12 mb-3">
 								<label for="boardContent">내용</label>
 								<textarea class="form-control" name="boardContent" id="boardContent" rows="15" cols="40">${ boardVO.boardContent }</textarea>
+							</div>
+							<div class="col-md-12 mb-3">
+								<input type="file" class="" name="attaches">
 							</div>
 							<div class="col-md-12 mb-3">
 								<button class="btn btn-primary" type="submit">등록</button>

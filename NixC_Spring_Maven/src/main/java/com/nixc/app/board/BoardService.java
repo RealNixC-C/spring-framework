@@ -2,6 +2,8 @@ package com.nixc.app.board;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.nixc.app.commons.Pager;
 
 public interface BoardService {
@@ -11,7 +13,7 @@ public interface BoardService {
 	//detail
 	public BoardVO detail(BoardVO boardVO) throws Exception;
 	//add
-	public int add(BoardVO boardVO) throws Exception;
+	public int add(BoardVO boardVO, MultipartFile attaches) throws Exception;
 	//update
 	public int update(BoardVO boardVO) throws Exception;
 	//delete

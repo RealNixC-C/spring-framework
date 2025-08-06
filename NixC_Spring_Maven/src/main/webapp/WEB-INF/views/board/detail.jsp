@@ -35,6 +35,12 @@
 <%-- 							<div><c:out value="${ boardVO.boardContent }"/></div> --%>
 						</div>
 						<div>
+							<div>${ boardVO.boardFileVO.oriName }</div>
+						</div>
+						<div>
+							<div>${ boardVO.boardFileVO.saveName }</div>
+						</div>
+						<div>
 							<form id="frm">
 								<input type="hidden" name="boardNo" value="${ boardVO.boardNo }">
 							</form>

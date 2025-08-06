@@ -10,11 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.nixc.app.board.BoardVO;
 import com.nixc.app.commons.Pager;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 @RequestMapping(value="qna/*")
 public class QnaController {
 
@@ -45,15 +49,15 @@ public class QnaController {
 	}
 	
 	@PostMapping("add")
-	public String add(Model model, QnaVO qnaVo) throws Exception {
-		
-		int result = qnaService.add(qnaVo);
+	public String add(Model model, QnaVO qnaVo, MultipartFile attaches) throws Exception {
+		log.info("{}", attaches);
+//		int result = qnaService.add(qnaVo);
 		
 		String msg = "등록 실패";
 		String url = "./list";
-		if(result > 0) {
-			msg = "등록 성공";
-		}
+//		if(result > 0) {
+//			msg = "등록 성공";
+//		}
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		

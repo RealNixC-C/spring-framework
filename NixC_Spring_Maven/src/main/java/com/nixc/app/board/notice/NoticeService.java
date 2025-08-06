@@ -1,14 +1,16 @@
 package com.nixc.app.board.notice;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.nixc.app.board.BoardFileVO;
 import com.nixc.app.board.BoardService;
 import com.nixc.app.board.BoardVO;
+import com.nixc.app.commons.FileManager;
 import com.nixc.app.commons.Pager;
 
 @Service
@@ -16,6 +18,15 @@ public class NoticeService implements BoardService{
 
 	@Autowired
 	private NoticeDao noticeDao;
+	
+	@Autowired
+	FileManager fileManager;
+	
+	@Value("${app.upload}")
+	private String upload;
+	
+	@Value("${board.notice}")
+	private String board;
 	
 	@Override
 	public List<BoardVO> list(Pager pager) throws Exception {
@@ -33,8 +44,21 @@ public class NoticeService implements BoardService{
 	}
 	
 	@Override
-	public int add(BoardVO boardVO) throws Exception {
-		return noticeDao.add(boardVO);
+	public int add(BoardVO boardVO, MultipartFile attaches) throws Exception {
+		// 1. boardNo정보를 얻기 위해 우선 notice테이블에 등록 후 useGeneratedKey값을 가져옴
+		int result = noticeDao.add(boardVO);
+		
+		// 2. File을 HDD에 저장
+		String fileName = fileManager.fileSave(upload + board, attaches);
+		
+		// 3. 저장된 파일의 정보를 DB에 저장
+		BoardFileVO vo = new BoardFileVO();
+		vo.setOriName(attaches.getOriginalFilename());
+		vo.setSaveName(fileName);
+		vo.setBoardNo(boardVO.getBoardNo());
+		result = noticeDao.addFile(vo);
+		
+		return 0;
 	}
 	
 	@Override
