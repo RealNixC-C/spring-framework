@@ -28,9 +28,11 @@
 	</update>
 	
 	<select id="detail" parameterType="boardVO" resultType="QnaVO">
-		SELECT *
-		FROM qna
-		WHERE board_no = #{boardNo}
+		SELECT * FROM qna WHERE board_no = #{boardNo}
+	</select>
+	
+	<select id="totalCount" resultType="Long">
+		SELECT COUNT(board_no) FROM qna
 	</select>
 	
   

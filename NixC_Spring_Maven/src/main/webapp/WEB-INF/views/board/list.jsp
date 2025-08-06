@@ -22,7 +22,7 @@
 					<!-- page content 내용 -->
 					<div class="row col-md-8 offset-md-2 ">
 						<h2>${ board }</h2>
-						<table class="table">
+						<table class="table text-center">
 							<thead>
 								<tr class="table-primary">
 									<th>번호</th>
@@ -50,6 +50,27 @@
 								</c:forEach>
 							</tbody>
 						</table>
+						
+						<div class="mx-auto">
+							<nav aria-label="Page navigation example">
+								<ul class="pagination">
+									<li class="page-item">
+										<a class="page-link" href="./list?pageNum=${ pager.startNum-1 }" aria-label="Previous"> 
+											<span aria-hidden="true">&laquo;</span>
+										</a>
+									</li>
+									<c:forEach begin="${ pager.startNum }" end="${ pager.endNum }" var="i">
+										<li class="page-item"><a class="page-link" href="./list?pageNum=${i}">${i}</a></li>
+									</c:forEach>
+									<li class="page-item">
+										<a class="page-link" href="./list?pageNum=${ pager.endNum+1 }" aria-label="Next"> 
+											<span aria-hidden="true">&raquo;</span>
+										</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+						
 						<div>
 							<a class="btn btn-outline-primary" href="./add">글쓰기</a>
 						</div>

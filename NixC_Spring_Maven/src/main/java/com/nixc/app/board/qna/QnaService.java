@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.nixc.app.board.BoardService;
 import com.nixc.app.board.BoardVO;
+import com.nixc.app.commons.Pager;
 
 @Service
 public class QnaService implements BoardService{
@@ -15,8 +16,9 @@ public class QnaService implements BoardService{
 	private QnaDao qnaDao;
 
 	@Override
-	public List<BoardVO> list() throws Exception {
-		return qnaDao.list();
+	public List<BoardVO> list(Pager pager) throws Exception {
+		pager.makeNum(qnaDao.totalCount());
+		return qnaDao.list(pager);
 	}
 
 	@Override

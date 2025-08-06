@@ -3,16 +3,15 @@ package com.nixc.app.board.notice;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import com.nixc.app.board.BoardVO;
+import com.nixc.app.commons.Pager;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -73,8 +72,8 @@ class NoticeDaoTest {
 	}
 	
 	//@Test
-	public void list() throws Exception {
-		List<BoardVO> noticeList = noticeDao.list();
+	public void list(Pager pager) throws Exception {
+		List<BoardVO> noticeList = noticeDao.list(pager);
 		
 		assertNotEquals(0, noticeList);
 	}

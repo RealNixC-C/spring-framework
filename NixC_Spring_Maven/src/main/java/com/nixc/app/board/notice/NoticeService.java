@@ -1,5 +1,7 @@
 package com.nixc.app.board.notice;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.nixc.app.board.BoardService;
 import com.nixc.app.board.BoardVO;
+import com.nixc.app.commons.Pager;
 
 @Service
 public class NoticeService implements BoardService{
@@ -15,8 +18,13 @@ public class NoticeService implements BoardService{
 	private NoticeDao noticeDao;
 	
 	@Override
-	public List<BoardVO> list() throws Exception {
-		return noticeDao.list();
+	public List<BoardVO> list(Pager pager) throws Exception {
+		// pager 객체는 controller에서부터 주소값을 가져왔기때문에 return하지않고
+		// controller의 pager 그대로 사용하면됨
+		Long totalCount = noticeDao.totalCount();
+		pager.makeNum(totalCount);
+		
+		return noticeDao.list(pager);
 	}
 
 	@Override
