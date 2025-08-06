@@ -93,6 +93,7 @@ public class QnaController {
 		return "board/detail";
 	}
 	
+	@PostMapping("delete")
 	public String delete(Model model, BoardVO boardVO) throws Exception {
 		
 		int result = qnaService.delete(boardVO);

@@ -34,7 +34,7 @@ public class NoticeController {
     }
 	
 	@GetMapping("list")
-	public String list(Model model, Pager pager, MultipartFile attaches) throws Exception {
+	public String list(Model model, Pager pager) throws Exception {
 		
 		List<BoardVO> list = noticeService.list(pager);
 		
@@ -45,8 +45,8 @@ public class NoticeController {
 	}
 
 	@GetMapping("detail")
-	public String detail(Model model, NoticeVO noticeVo) throws Exception {
-		BoardVO boardVO = noticeService.detail(noticeVo);
+	public String detail(Model model, NoticeVO noticeVO) throws Exception {
+		BoardVO boardVO = noticeService.detail(noticeVO);
 		
 		model.addAttribute("boardVO", boardVO);
 		return "board/detail";
