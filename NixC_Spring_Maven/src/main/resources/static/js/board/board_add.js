@@ -49,7 +49,7 @@ btnAdd.addEventListener("click", ()=>{
 
 // 방법2. createElement 생성 후 append	
 	let div = document.createElement("div"); //<div></div>
-	div.classList.add("mb-3", "col-md-12")                 //<div class="mb-3"></div>
+	div.classList.add("mb-3", "col-md-12", "d-flex")                 //<div class="mb-3"></div>
 	div.innerHTML=	`<input type="file" class="form-control" name="attaches"><button type="button" class="btn_close">X</button>`
 	
 //	let ch = document.createElement("input"); //<input>

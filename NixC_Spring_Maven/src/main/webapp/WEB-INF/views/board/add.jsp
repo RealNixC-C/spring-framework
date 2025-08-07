@@ -50,7 +50,7 @@
 								</c:forEach>
 							</div>
 							<div class="" id="result" data-file-count="${fn:length(boardVO.boardFileVOs)}">
-							
+								<!-- 여기에 추가 -->
 							</div>
 						</form>
 					</div>

@@ -20,21 +20,25 @@
 				<c:import url="/WEB-INF/views/include/topbar.jsp"></c:import>
 				<div class="container-fluid">
 					<!-- page content 내용 -->
-					<div class="col-md-8 offset-md-2 ">
-						<h2>${ board }</h2>
-						<div>
-							<form id="searchFrom" method="get">
-								<div class="input-group mb-3">
-									<input type="hidden" id="pageNum" name="pageNum">
-									<select class="form-select" name="kind">
-										<option value="k1" ${ pager.kind eq 'k1' ? 'selected' : '' }>제목</option>
-										<option value="k2" ${ pager.kind eq 'k2' ? 'selected' : '' }>내용</option>
-										<option value="k3" ${ pager.kind eq 'k3' ? 'selected' : '' }>작성자</option>
-									</select>
-									<input type="text" class="form-control" value="${ pager.keyword }" placeholder="제목을 입력하세요." name="keyword">
-									<button class="btn btn-outline-secondary" type="submit" id="button-addon2">검색</button>
-								</div>
-							</form>
+					<div class="col-md-8 offset-md-2">
+						<div class="col-md-12 text-center">
+							<h2>${ board }</h2>
+						</div>
+						<div class="row justify-content-center">
+							<div class="col-md-8">
+								<form id="searchForm" method="get">
+									<div class="input-group mb-3">
+										<input type="hidden" id="pageNum" name="pageNum">
+										<select class="form-select rounded" name="kind" >
+											<option value="k1" ${ pager.kind eq 'k1' ? 'selected' : '' }>제목</option>
+											<option value="k2" ${ pager.kind eq 'k2' ? 'selected' : '' }>내용</option>
+											<option value="k3" ${ pager.kind eq 'k3' ? 'selected' : '' }>작성자</option>
+										</select>
+										<input type="text" class="form-control" value="${ pager.keyword }" placeholder="제목을 입력하세요." name="keyword">
+										<button class="btn btn-primary" type="submit" id="button-addon2">검색</button>
+									</div>
+								</form>
+							</div>
 						</div>
 						<table class="table text-center">
 							<thead>
@@ -66,9 +70,9 @@
 							</tbody>
 						</table>
 						
-						<div class="mx-auto">
+						<div>
 							<nav aria-label="Page navigation example">
-								<ul class="pagination">
+								<ul class="pagination justify-content-center">
 									<li class="page-item">
 										<button type="button" class="page-link pn" data-pn="${ pager.startNum-1 }" aria-label="Previous"> 
 											<span aria-hidden="true">&laquo;</span>

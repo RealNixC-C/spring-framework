@@ -20,7 +20,9 @@
 				<div class="container-fluid d-flex justify-content-center" style="margin-top: 100px; height: 600px;">
 					<div class="w-50">
 						<!-- page content 내용 -->
-						<div><h2>${ board }</h2></div>
+						<div>
+							<h2>${ board }</h2>
+						</div>
 						<div class="row bg-body-tertiary">
 							<div class="mx-auto h2">${ boardVO.boardTitle }</div>
 						</div>
