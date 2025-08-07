@@ -52,12 +52,13 @@
 										<td>${ l.boardNo }</td>
 										<td>${ l.boardWriter }</td>
 										<td>
-										<c:catch>
-										<c:forEach begin="1" end="${ l.boardDepth }" varStatus="vs">&nbsp;&nbsp;
-										<c:if test="${vs.last}">ㄴ</c:if>
-										</c:forEach>
-										</c:catch>
-										<a href="./detail?boardNo=${ l.boardNo }">${ l.boardTitle }</a></td>
+											<c:catch>
+												<c:forEach begin="1" end="${ l.boardDepth }" varStatus="vs">&nbsp;&nbsp;
+													<c:if test="${vs.last}">ㄴ</c:if>
+												</c:forEach>
+											</c:catch>
+										<a href="./detail?boardNo=${ l.boardNo }">${ l.boardTitle }</a>
+										</td>
 										<td>${ l.boardDate }</td>
 										<td>${ l.boardHit }</td>
 									</tr>
@@ -69,17 +70,17 @@
 							<nav aria-label="Page navigation example">
 								<ul class="pagination">
 									<li class="page-item">
-										<a class="page-link pn" data-pn="${ pager.startNum-1 }" aria-label="Previous"> 
+										<button type="button" class="page-link pn" data-pn="${ pager.startNum-1 }" aria-label="Previous"> 
 											<span aria-hidden="true">&laquo;</span>
-										</a>
+										</button>
 									</li>
 									<c:forEach begin="${ pager.startNum }" end="${ pager.endNum }" var="i">
-										<li class="page-item"><a class="page-link pn" data-pn="${i}" >${i}</a></li>
+										<li class="page-item"><button type="button" class="page-link pn" data-pn="${i}" >${i}</button></li>
 									</c:forEach>
 									<li class="page-item">
-										<a class="page-link pn" data-pn="${ pager.endNum+1 }" aria-label="Next"> 
+										<button type="button" class="page-link pn" data-pn="${ pager.endNum+1 }" aria-label="Next"> 
 											<span aria-hidden="true">&raquo;</span>
-										</a>
+										</button>
 									</li>
 								</ul>
 							</nav>

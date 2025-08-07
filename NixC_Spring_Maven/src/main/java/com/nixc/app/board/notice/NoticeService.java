@@ -1,5 +1,6 @@
 package com.nixc.app.board.notice;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class NoticeService implements BoardService{
 		// pager 객체는 controller에서부터 주소값을 가져왔기때문에 return하지않고
 		// controller의 pager 그대로 사용하면됨
 		Long totalCount = noticeDao.totalCount(pager);
+		if(totalCount == 0) return Collections.emptyList();
 		pager.makeNum(totalCount);
 		
 		return noticeDao.list(pager);
