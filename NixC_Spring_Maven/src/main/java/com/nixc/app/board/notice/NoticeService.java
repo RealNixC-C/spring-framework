@@ -44,24 +44,27 @@ public class NoticeService implements BoardService{
 	}
 	
 	@Override
-	public int add(BoardVO boardVO, MultipartFile attaches) throws Exception {
+	public int add(BoardVO boardVO, MultipartFile[] attaches) throws Exception {
 		// 1. boardNo정보를 얻기 위해 우선 notice테이블에 등록 후 useGeneratedKey값을 가져옴
 		int result = noticeDao.add(boardVO);
 		
-		if(attaches == null && attaches.isEmpty()) {
-			return result;
+		if(attaches != null && attaches.length != 0) {
+			for (MultipartFile attach : attaches) {
+				if(attach == null || attach.isEmpty()) {
+					continue;
+				}
+				// 2. File을 HDD에 저장
+					
+				String fileName = fileManager.fileSave(upload + board, attach);
+				
+				// 3. 저장된 파일의 정보를 DB에 저장
+				BoardFileVO vo = new BoardFileVO();
+				vo.setOriName(attach.getOriginalFilename());
+				vo.setSaveName(fileName);
+				vo.setBoardNo(boardVO.getBoardNo());
+				result = noticeDao.addFile(vo);
+			}
 		}
-		// 2. File을 HDD에 저장
-			
-		String fileName = fileManager.fileSave(upload + board, attaches);
-		
-		// 3. 저장된 파일의 정보를 DB에 저장
-		BoardFileVO vo = new BoardFileVO();
-		vo.setOriName(attaches.getOriginalFilename());
-		vo.setSaveName(fileName);
-		vo.setBoardNo(boardVO.getBoardNo());
-		result = noticeDao.addFile(vo);
-		
 		return result;
 	}
 	@Override
@@ -71,6 +74,12 @@ public class NoticeService implements BoardService{
 
 	@Override
 	public int delete(BoardVO boardVO) throws Exception {
+		boardVO = noticeDao.detail(boardVO);
+		
+		for (BoardFileVO vo : boardVO.getBoardFileVOs()) {
+			boolean result = fileManager.fileDelete(upload + board, vo.getSaveName());
+		}
+		int result = noticeDao.fileDelete(boardVO);
 		return noticeDao.delete(boardVO);
 	}
 }

@@ -17,7 +17,7 @@ for(a of buttons) {
 				frm.setAttribute("action", "./delete");
 			} 
 		} else if(kind == 'u'){
-			frm.setAttribute("method", "POST");
+			frm.setAttribute("method", "GET");
 			frm.setAttribute("action", "./update");
 		} else {
 			frm.setAttribute("action", "./reply")

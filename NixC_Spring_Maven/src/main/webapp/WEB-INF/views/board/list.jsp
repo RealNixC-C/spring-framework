@@ -23,7 +23,7 @@
 					<div class="col-md-8 offset-md-2 ">
 						<h2>${ board }</h2>
 						<div>
-							<form id="searchFrom">
+							<form id="searchFrom" method="get">
 								<div class="input-group mb-3">
 									<input type="hidden" id="pageNum" name="pageNum">
 									<select class="form-select" name="kind">
@@ -69,15 +69,15 @@
 							<nav aria-label="Page navigation example">
 								<ul class="pagination">
 									<li class="page-item">
-										<a class="page-link pn" data-pn="${ pager.startNum-1 }" href="" aria-label="Previous"> 
+										<a class="page-link pn" data-pn="${ pager.startNum-1 }" aria-label="Previous"> 
 											<span aria-hidden="true">&laquo;</span>
 										</a>
 									</li>
 									<c:forEach begin="${ pager.startNum }" end="${ pager.endNum }" var="i">
-										<li class="page-item"><a class="page-link pn" data-pn="${i}" href="">${i}</a></li>
+										<li class="page-item"><a class="page-link pn" data-pn="${i}" >${i}</a></li>
 									</c:forEach>
 									<li class="page-item">
-										<a class="page-link pn" data-pn="${ pager.endNum+1 }" href="" aria-label="Next"> 
+										<a class="page-link pn" data-pn="${ pager.endNum+1 }" aria-label="Next"> 
 											<span aria-hidden="true">&raquo;</span>
 										</a>
 									</li>

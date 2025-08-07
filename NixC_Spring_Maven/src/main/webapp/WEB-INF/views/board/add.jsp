@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,11 +35,22 @@
 								<label for="boardContent">내용</label>
 								<textarea class="form-control" name="boardContent" id="boardContent" rows="15" cols="40">${ boardVO.boardContent }</textarea>
 							</div>
-							<div class="col-md-12 mb-3">
-								<input type="file" class="" name="attaches">
+							<div class="d-flex justify-content-between col-md-12 mb-3">
+								<div class="mb-3">
+									<button class="btn btn-primary" type="button" id="btn_add">파일추가</button>
+								</div>
+								
+								<div class="mb-3">
+									<button class="btn btn-primary" type="submit">등록</button>
+								</div>
 							</div>
-							<div class="col-md-12 mb-3">
-								<button class="btn btn-primary" type="submit">등록</button>
+							<div>
+								<c:forEach items="${ boardVO.boardFileVOs }" var="vo">
+									<button class="deleteFile" type="button">${ vo.oriName }</button>
+								</c:forEach>
+							</div>
+							<div class="" id="result" data-file-count="${fn:length(boardVO.boardFileVOs)}">
+							
 							</div>
 						</form>
 					</div>
@@ -53,5 +65,6 @@
 	
 	<!-- Modal, JS -->
 	<c:import url="/WEB-INF/views/include/tail.jsp"></c:import>
+	<script type="text/javascript" src="/js/board/board_add.js"></script>
 </body>
 </html>

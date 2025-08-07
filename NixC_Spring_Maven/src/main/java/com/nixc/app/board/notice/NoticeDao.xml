@@ -11,12 +11,11 @@
   		<result column="board_writer" property="boardWriter"/>
   		<result column="board_date" property="boardDate"/>
   		<result column="board_hit" property="boardHit"/>
-  		<association property="boardFileVO" javaType="BoardFileVO">
+  		<collection property="boardFileVOs" javaType="java.util.List" ofType="BoardFileVO">
   			<id column="file_no" property="fileNo"/>
-  			<result column="board_no" property="boardNo"/>
   			<result column="ori_name" property="oriName"/>
   			<result column="save_name" property="saveName"/>
-  		</association>
+		</collection>
   	</resultMap>
   	
   	<sql id="search">
@@ -76,6 +75,11 @@
 		INSERT INTO notice_files (file_no, board_no, ori_name, save_name)
 		VALUES (NULL, #{boardNo}, #{oriName}, #{saveName})
 	</insert>	
+	
+	<delete id="fileDelete" parameterType="BoardVO">
+		DELETE FROM notice_files
+		WHERE board_no = #{boardNo}
+	</delete>
 	
 </mapper>
 

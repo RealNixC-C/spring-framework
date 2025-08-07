@@ -12,11 +12,12 @@ console.log(pn);
 console.log(pn2);
 
 pn.forEach(function (el) {
-	el.addEventListener("click", function() {
-		let n = this.getAttribute("data-pn");
+	el.addEventListener("click", ()=> {
+//		let n = this.getAttribute("data-pn");
+		let n = el.getAttribute("data-pn");
 		pageNum.value=n;
-//		searchForm.submit();
 		console.log(n)
+		searchForm.submit();
 	})
 })
 
