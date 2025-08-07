@@ -19,6 +19,34 @@
   		</association>
   	</resultMap>
   	
+  	<sql id="search">
+  		WHERE
+  		<choose>
+  			<when test="kind='k1'">
+  				board_title
+  			</when>
+  			<when test="kind='k2'">
+  				board_content
+  			</when>
+  			<otherwise>
+  				board_writer
+  			</otherwise>
+  		</choose> 
+  		LIKE CONCAT ('%', #{keyword}, '%')
+  	</sql>
+  	
+	<select id="list" resultType="NoticeVO" parameterType="Pager">
+		SELECT * FROM notice
+		<include refid="search"></include>
+		ORDER BY board_no DESC
+		LIMIT #{startIndex}, #{endIndex}
+	</select>
+	
+	<select id="totalCount" resultType="Long" parameterType="Pager">
+		SELECT COUNT(board_no) FROM notice
+		<include refid="search"></include>
+	</select>
+  	
   	<select id="detail" parameterType="NoticeVO" resultMap="noticeResultMap">
   		SELECT *
   		FROM notice n
@@ -43,17 +71,6 @@
 		DELETE FROM notice
 		WHERE board_no = #{boardNo}
 	</delete>
-	
-	<select id="list" resultType="NoticeVO" parameterType="Pager">
-		SELECT *
-		FROM notice
-		ORDER BY board_no DESC
-		LIMIT #{startIndex}, #{endIndex}
-	</select>
-	
-	<select id="totalCount" resultType="Long">
-		SELECT COUNT(board_no) FROM notice
-	</select>
 
 	<insert id="addFile" parameterType="BoardFileVO">
 		INSERT INTO notice_files (file_no, board_no, ori_name, save_name)

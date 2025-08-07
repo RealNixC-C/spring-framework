@@ -32,7 +32,7 @@ public class NoticeService implements BoardService{
 	public List<BoardVO> list(Pager pager) throws Exception {
 		// pager 객체는 controller에서부터 주소값을 가져왔기때문에 return하지않고
 		// controller의 pager 그대로 사용하면됨
-		Long totalCount = noticeDao.totalCount();
+		Long totalCount = noticeDao.totalCount(pager);
 		pager.makeNum(totalCount);
 		
 		return noticeDao.list(pager);
@@ -48,7 +48,11 @@ public class NoticeService implements BoardService{
 		// 1. boardNo정보를 얻기 위해 우선 notice테이블에 등록 후 useGeneratedKey값을 가져옴
 		int result = noticeDao.add(boardVO);
 		
+		if(attaches == null && attaches.isEmpty()) {
+			return result;
+		}
 		// 2. File을 HDD에 저장
+			
 		String fileName = fileManager.fileSave(upload + board, attaches);
 		
 		// 3. 저장된 파일의 정보를 DB에 저장
@@ -58,9 +62,8 @@ public class NoticeService implements BoardService{
 		vo.setBoardNo(boardVO.getBoardNo());
 		result = noticeDao.addFile(vo);
 		
-		return 0;
+		return result;
 	}
-	
 	@Override
 	public int update(BoardVO boardVO) throws Exception {
 		return noticeDao.update(boardVO);

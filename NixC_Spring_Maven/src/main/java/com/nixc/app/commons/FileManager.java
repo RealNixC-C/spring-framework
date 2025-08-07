@@ -23,6 +23,7 @@ public class FileManager {
 		fileName = fileName + "_" + attaches.getOriginalFilename();
 		
 		// 3. HDD에 저장
+		
 		file = new File(file, fileName);
 		// a. MultipartFile transferTo 메서드 사용
 		// attaches.transferTo(file);
