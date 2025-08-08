@@ -41,11 +41,28 @@ public class QnaService implements BoardService{
 
 	public int reply(MultipartFile[] attaches, QnaVO qnaVO) throws Exception {
 		QnaVO parent = (QnaVO)qnaDao.detail(qnaVO);
+		
 		qnaVO.setBoardRef(parent.getBoardRef());
 		qnaVO.setBoardStep(parent.getBoardStep()+1);
 		qnaVO.setBoardDepth(parent.getBoardDepth()+1);
 		qnaDao.replyUpdate(parent);
 		int result = qnaDao.add(qnaVO);
+		
+		if(attaches != null && attaches.length != 0) {
+			for (MultipartFile attach : attaches) {
+				if(attach == null || attach.isEmpty()) {
+					continue;
+				}
+				String fileName = fileManager.fileSave(upload + board, attach);
+				
+				BoardFileVO vo = new BoardFileVO();
+				vo.setOriName(attach.getOriginalFilename());
+				vo.setSaveName(fileName);
+				vo.setBoardNo(qnaVO.getBoardNo());
+				result = qnaDao.addFile(vo);
+			}
+		}
+		
 		return result;
 	}
 	
