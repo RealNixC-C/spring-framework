@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.nixc.app.products.ProductDao">
+ 	<resultMap type="ProductVO" id="detailResult">
+ 		<!-- PK Mapping -->
+ 		<id column="product_no" property="productNo"/>
+ 		<!-- 그외 나머지 -->
+ 		<result column="kind_no" property="kindNo"/>
+ 		<result column="product_name" property="productName"/>
+ 		<result column="product_content" property="productContent"/>
+ 		<result column="product_date" property="productDate"/>
+ 		<result column="product_rate" property="productRate"/>
+ 		<!-- 1:1 관계일경우 -->
+		<association property="productKindVO" javaType="ProductKindVO">
+	 		<id column="kind_no" property="kindNo"/>
+	 		<result column="kind_name" property="kindName"/>
+		</association>
+ 	</resultMap>
+  
+  	<select id="list" resultType="ProductVO">
+  		SELECT * FROM products ORDER BY product_no DESC
+  	</select>
+	
+	<select id="detail" parameterType="ProductVO" resultMap="detailResult">
+		SELECT *
+		FROM products p
+		INNER JOIN products_kind pk USING(kind_no)
+		WHERE product_no = #{productNo};
+	</select>
+		
+	<insert id="add" parameterType="ProductVO">
+		INSERT INTO products(product_no, kind_no, product_name, product_content, product_date, product_rate)
+		VALUES (null, #{kindNo}, #{productName}, #{productContent}, #{productDate}, #{productRate})
+	</insert>
+	
+	<update id="update" parameterType="ProductVO">
+		UPDATE products
+		SET kind_no = #{kindNo}, product_name = #{productName}, product_content = #{productContent}, product_rate = #{productRate}
+		WHERE product_no = #{productNo}
+	</update>
+	
+	<delete id="delete" parameterType="ProductVO">
+		DELETE FROM products
+		WHERE product_no = #{productNo}	
+	</delete>
+</mapper>
+

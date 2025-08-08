@@ -1,6 +1,7 @@
 package com.nixc.app.board;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -14,11 +15,12 @@ import lombok.ToString;
 @Component
 public class BoardVO {
 
-	private long boardNo;
+	private Long boardNo;
 	private String boardTitle;
 	private String boardContent;
 	private String boardWriter;
 	private LocalDateTime boardDate;
-	private long boardHit;
+	private Long boardHit;
 	
+	private List<BoardFileVO> boardFileVOs;
 }

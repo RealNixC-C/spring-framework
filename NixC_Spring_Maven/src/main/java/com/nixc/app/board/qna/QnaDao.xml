@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.nixc.app.board.qna.QnaDao">
+
+	<resultMap type="QnaVO" id="qnaResultMap">
+		<id column="board_no" property="boardNo"/>
+		<result column="board_title" property="boardTitle"/>
+		<result column="board_content" property="boardContent"/>
+		<result column="board_writer" property="boardWriter"/>
+		<result column="board_date" property="boardDate"/>
+		<result column="board_hit" property="boardHit"/>
+		<result column="board_ref" property="boardRef"/>
+		<result column="board_step" property="boardStep"/>
+		<result column="board_depth" property="boardDepth"/>
+		<collection property="boardFileVOs" javaType="java.util.List" ofType="BoardFileVO">
+			<id column="file_no" property="fileNo"/>
+			<result column="ori_name" property="oriName"/>
+			<result column="save_name" property="saveName"/>
+		</collection>
+	</resultMap>
+
+	<sql id="search">
+  		WHERE
+  		<choose>
+  			<when test="kind='k1'">
+  				board_title
+  			</when>
+  			<when test="kind='k2'">
+  				board_content
+  			</when>
+  			<otherwise>
+  				board_writer
+  			</otherwise>
+  		</choose> 
+  		LIKE CONCAT ('%', #{keyword}, '%')
+  	</sql>
+
+	<select id="list" resultType="QnaVO" parameterType="Pager">
+	 	SELECT * FROM qna
+	 	<include refid="search"></include>
+		ORDER BY board_ref DESC, board_step ASC
+		LIMIT #{endIndex} OFFSET #{startIndex}
+	</select>
+	
+		<select id="totalCount" resultType="Long">
+		SELECT COUNT(board_no) FROM qna
+		<include refid="search"></include>
+	</select>
+	
+	<select id="detail" parameterType="QnaVO" resultMap="qnaResultMap">
+		SELECT * FROM qna q
+		LEFT JOIN qna_files qf USING (board_no)
+		WHERE board_no = #{boardNo}
+	</select>
+  
+	<insert id="add" parameterType="QnaVO" useGeneratedKeys="true" keyProperty="boardNo">
+		INSERT INTO qna(board_no, board_title, board_content, board_writer, board_date, board_hit, board_ref, board_step, board_depth)
+		VALUES (NULL, #{boardTitle}, #{boardContent}, #{boardWriter}, now(), 0, #{boardRef}, #{boardStep}, #{boardDepth})
+	</insert>
+	
+	<update id="update" parameterType="QnaVO">
+		UPDATE qna
+		SET board_title = #{boardTitle}, board_content = #{boardContent}, board_writer = #{boardWriter}
+		<where>
+			board_no = #{boardNo};
+		</where>
+	</update>
+	
+    <!--수정할 예정-->
+	<delete id="delete" parameterType="BoardVO">
+		DELETE FROM qna
+		WHERE board_no = #{boardNo}
+	</delete>
+	
+	<insert id="addFile">
+		INSERT INTO qna_files (file_no, board_no, ori_name, save_name)
+		VALUES (null, #{boardNo}, #{oriName}, #{saveName})
+	</insert>
+	
+	<update id="refUpdate" parameterType="QnaVO">	
+		UPDATE QNA
+		SET board_ref = #{boardNo}
+		WHERE board_no = #{boardNo}
+	</update>
+	
+	<update id="replyUpdate" parameterType="QnaVO">
+		UPDATE qna
+		SET board_step = board_step + 1
+		WHERE board_ref = #{boardRef} AND board_step > #{boardStep} 
+	</update>
+	
+	<select id="fileDetail" parameterType="BoardFileVO" resultType="BoardFileVO">
+		SELECT * FROM qna_files 
+		WHERE file_no = #{fileNo}
+	</select>
+	
+	<delete id="fileDelete" parameterType="BoardVO">
+		DELETE FROM qna_files
+		WHERE board_no = #{boardNo}
+	</delete>
+	
+	<delete id="fileDeleteOne" parameterType="BoardFileVO">
+		DELETE FROM qna_files
+		WHERE file_no = #{fileNo}
+	</delete>
+	
+	<update id="titleUpdate" parameterType="BoardVO">
+		UPDATE qna
+		SET board_title = #{boardTitle}
+		WHERE board_no = #{boardNo}
+	</update>
+	
+	
+	
+	
+  
+</mapper>
+
