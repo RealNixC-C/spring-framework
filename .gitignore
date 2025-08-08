@@ -3,6 +3,7 @@
 
 .vscode
 NixC_Spring_Maven/src/main/resources/application.properties
+NixC_Spring_Maven/src/main/resources/*.properties
 
 ### Eclipse ###
 .metadata
