@@ -81,7 +81,7 @@
 	</insert>
 	
 	<update id="refUpdate" parameterType="QnaVO">	
-		UPDATE QNA
+		UPDATE qna
 		SET board_ref = #{boardNo}
 		WHERE board_no = #{boardNo}
 	</update>

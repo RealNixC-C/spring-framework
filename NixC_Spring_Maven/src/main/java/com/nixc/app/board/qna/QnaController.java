@@ -106,9 +106,6 @@ public class QnaController {
 	
 	@PostMapping("reply")
 	public String reply(Model model, QnaVO qnaVO, MultipartFile[] attaches) throws Exception {
-		
-		System.out.println(qnaVO.getBoardNo());
-		
 		int result = qnaService.reply(attaches, qnaVO);
 		String msg = "등록 실패";
 		String url = "./detail?boardNo=" + qnaVO.getBoardNo();
