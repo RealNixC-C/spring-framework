@@ -98,14 +98,16 @@ public class QnaController {
 	}
 	
 	@GetMapping("reply")
-	public String reply(Model model, QnaVO qnaVO) throws Exception {
-		model.addAttribute("qnaVO", qnaVO);
+	public String reply(Model model, BoardVO boardVO) throws Exception {
+		model.addAttribute("boardVO", boardVO);
 		
 		return "board/add";
 	}
 	
 	@PostMapping("reply")
 	public String reply(Model model, QnaVO qnaVO, MultipartFile[] attaches) throws Exception {
+		
+		System.out.println(qnaVO.getBoardNo());
 		
 		int result = qnaService.reply(attaches, qnaVO);
 		String msg = "등록 실패";
