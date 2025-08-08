@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.nixc.app.board.BoardFileVO;
 import com.nixc.app.board.BoardVO;
 import com.nixc.app.commons.Pager;
 
@@ -43,17 +45,49 @@ public class QnaController {
 		return "board/list";
 	}
 	
+	@GetMapping("detail")
+	public String detail(Model model, BoardVO boardVO) throws Exception {
+		BoardVO result = qnaService.detail(boardVO);
+		
+		model.addAttribute("boardVO", result);
+		return "board/detail";
+	}
+	
 	@GetMapping("add")
 	public String add() {
+		
 		return "board/add";
 	}
 	
 	@PostMapping("add")
-	public String add(Model model, QnaVO qnaVo, MultipartFile attaches) throws Exception {
-		int result = qnaService.add(qnaVo, attaches);
+	public String add(Model model, QnaVO qnaVO, MultipartFile[] attaches) throws Exception {
+		int result = qnaService.add(qnaVO, attaches);
 		
 		String msg = "등록 실패";
 		String url = "./list";
+		if(result > 0) {
+			msg = "등록 성공";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "commons/result";
+	}
+	
+	@GetMapping("update")
+	public String update(Model model, BoardVO qnaVO) throws Exception{
+		BoardVO boardVO = qnaService.detail(qnaVO);
+		model.addAttribute("boardVO", boardVO);
+		
+		return "board/add";
+	}
+	
+	@PostMapping("update")
+	public String update(Model model, BoardVO noticeVO, MultipartFile[] attaches) throws Exception {
+		int result = qnaService.update(noticeVO, attaches);
+		
+		String msg = "등록 실패";
+		String url = "./detail?boardNo=" + noticeVO.getBoardNo();
 		if(result > 0) {
 			msg = "등록 성공";
 		}
@@ -71,27 +105,20 @@ public class QnaController {
 	}
 	
 	@PostMapping("reply")
-	public String reply(QnaVO qnaVO) throws Exception {
+	public String reply(Model model, BoardVO boardVO, MultipartFile[] attaches) throws Exception {
 		
-		int result = qnaService.reply(qnaVO);
-//		String msg = "등록 실패";
-//		String url = "./detail?boardNo=" + qnaVO.getBoardNo();
-//		if(result > 0) {
-//			msg = "등록 성공";
-//		}
+		int result = qnaService.reply(attaches, boardVO);
+		String msg = "등록 실패";
+		String url = "./detail?boardNo=" + boardVO.getBoardNo();
+		if(result > 0) {
+			msg = "등록 성공";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
 		
 		return "redirect:./list";
 	}
-	
-	@GetMapping("detail")
-	public String detail(Model model, BoardVO boardVO) throws Exception {
-		
-		BoardVO result = qnaService.detail(boardVO);
-//		System.out.println(result.getBoardFileVO().toString());
-		
-		model.addAttribute("boardVO", result);
-		return "board/detail";
-	}
+
 	
 	@PostMapping("delete")
 	public String delete(Model model, BoardVO boardVO) throws Exception {
@@ -109,7 +136,13 @@ public class QnaController {
 		return "commons/result";
 	}
 	
-	
+	@PostMapping("fileDelete")
+	@ResponseBody
+	public int fileDelete(Model model, BoardFileVO boardFileVO) throws Exception {
+		int result = qnaService.fileDelete(boardFileVO);
+		
+		return result;
+	}
 	
 	
 	

@@ -8,15 +8,11 @@ import com.nixc.app.commons.Pager;
 
 public interface BoardService {
 
-	//list
 	public List<BoardVO> list(Pager pager) throws Exception;
-	//detail
 	public BoardVO detail(BoardVO boardVO) throws Exception;
-	//add
 	public int add(BoardVO boardVO, MultipartFile[] attaches) throws Exception;
-	//update
-	public int update(BoardVO boardVO) throws Exception;
-	//delete
+	public int update(BoardVO boardVO, MultipartFile[] attaches) throws Exception;
 	public int delete(BoardVO boardVO) throws Exception;
+	public int fileDelete(BoardFileVO boardFileVO) throws Exception;
 	
 }

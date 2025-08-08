@@ -47,8 +47,7 @@
 	</select>
   	
   	<select id="detail" parameterType="NoticeVO" resultMap="noticeResultMap">
-  		SELECT *
-  		FROM notice n
+  		SELECT * FROM notice n
   		LEFT JOIN notice_files nf USING(board_no)
   		WHERE board_no = ${boardNo}
   	</select>
@@ -76,10 +75,26 @@
 		VALUES (NULL, #{boardNo}, #{oriName}, #{saveName})
 	</insert>	
 	
+	<select id="fileDetail" parameterType="BoardFileVO" resultType="BoardFileVO">
+		SELECT * FROM notice_files
+		WHERE file_no = #{fileNo}
+	</select>
+	
 	<delete id="fileDelete" parameterType="BoardVO">
 		DELETE FROM notice_files
 		WHERE board_no = #{boardNo}
 	</delete>
+	
+	<delete id="fileDeleteOne" parameterType="BoardFileVO">
+		DELETE FROM notice_files
+		WHERE file_no = #{fileNo}
+	</delete>
+	
+	
+	
+
+	
+	
 	
 </mapper>
 

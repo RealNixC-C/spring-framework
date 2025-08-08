@@ -5,7 +5,7 @@ console.log("board_list")
 
 const pn = document.querySelectorAll(".pn");
 const pn2 = document.getElementsByClassName("pn");
-const searchForm = document.getElementById("searchFrom");
+const searchForm = document.getElementById("searchForm");
 const pageNum = document.querySelector("#pageNum");
 
 console.log(pn);

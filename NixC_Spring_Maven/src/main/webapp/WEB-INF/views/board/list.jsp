@@ -61,7 +61,8 @@
 													<c:if test="${vs.last}">ㄴ</c:if>
 												</c:forEach>
 											</c:catch>
-										<a href="./detail?boardNo=${ l.boardNo }">${ l.boardTitle }</a>
+										<c:if test="${ l.boardTitle ne 'deleted' }"><a href="./detail?boardNo=${ l.boardNo }">${ l.boardTitle }</a></c:if>
+										<c:if test="${ l.boardTitle eq 'deleted' }"><span>삭제된 게시글입니다.</span></c:if>
 										</td>
 										<td>${ l.boardDate }</td>
 										<td>${ l.boardHit }</td>

@@ -76,8 +76,8 @@ public class NoticeController {
 	}
 	
 	@PostMapping("update")
-	public String update(Model model, NoticeVO noticeVO) throws Exception{
-		int result = noticeService.update(noticeVO);
+	public String update(Model model, NoticeVO noticeVO, MultipartFile[] attaches) throws Exception{
+		int result = noticeService.update(noticeVO, attaches);
 		
 		String msg = "수정 실패";
 		String url="./detail?boardNo="+noticeVO.getBoardNo();
@@ -107,15 +107,10 @@ public class NoticeController {
 	
 	@PostMapping("fileDelete")
 	@ResponseBody
-	public List<BoardVO> fileDelete(Model model, BoardFileVO boardFileVO) throws Exception {
-		log.info("============ file Delete ==============");
-		log.info("= {} =", boardFileVO.getFileNo());
-		model.addAttribute("result", "hello");
+	public int fileDelete(Model model, BoardFileVO boardFileVO) throws Exception {
+		int result = noticeService.fileDelete(boardFileVO);
 		
-		Pager pager = new Pager();
-		List<BoardVO> list = noticeService.list(pager);
-		
-		return list;
+		return result;
 	}
 	
 }

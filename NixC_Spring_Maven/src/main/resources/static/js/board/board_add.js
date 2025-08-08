@@ -9,18 +9,32 @@ const fileSize = document.getElementById("result").getAttribute("data-file-count
 const deleteFile = document.querySelectorAll(".deleteFile");
 let count = fileSize;
 
+// update / ajax 통신
 deleteFile.forEach((item)=>{
 	item.addEventListener("click", ()=>{
+		
+		let flag = confirm("정말 삭제하시겠습니까?")
+		
+		if(!flag) {
+			return;
+		}
 		let params = new URLSearchParams();
-		params.append("fileNo", 5)
+		params.append("fileNo", item.getAttribute("data-file-no"))
 		fetch(`./fileDelete`, {
 			method : "post",
 			body : params
 		})
-		.then(r=>r.json())
+		.then(r=>r.text())
 		.then(r=>{
-			console.log(r);
+			if(r==1){
+				count--;
+				item.remove();
+				alert('삭제 성공');
+			} else {
+				alert('삭제 실패');
+			}
 		})
+		
 	})
 })
 
