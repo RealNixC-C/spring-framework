@@ -2,7 +2,7 @@ package com.nixc.app.board;
 
 import java.util.List;
 
-import com.nixc.app.board.notice.NoticeVO;
+import com.nixc.app.commons.Pager;
 
 public interface BoardDao {
 
@@ -10,5 +10,10 @@ public interface BoardDao {
 	public int update(BoardVO boardVO)throws Exception;
 	public int delete(BoardVO boardVO)throws Exception;
 	public BoardVO detail(BoardVO boardVO)throws Exception;
-	public List<BoardVO> list()throws Exception;
+	public List<BoardVO> list(Pager pager)throws Exception;
+	public Long totalCount(Pager pager) throws Exception;
+	public int addFile(BoardFileVO boardFileVO) throws Exception;
+	public int fileDelete(BoardVO boardVO) throws Exception;
+	public BoardFileVO fileDetail(BoardFileVO boardFileVO) throws Exception;
+	public int fileDeleteOne(BoardFileVO boardFileVO) throws Exception;
 }

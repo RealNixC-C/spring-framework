@@ -2,17 +2,18 @@ package com.nixc.app.board;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import com.nixc.app.commons.Pager;
+
 public interface BoardService {
 
-	//list
-	public List<BoardVO> list() throws Exception;
-	//detail
+	public List<BoardVO> list(Pager pager) throws Exception;
 	public BoardVO detail(BoardVO boardVO) throws Exception;
-	//add
-	public int add(BoardVO boardVO) throws Exception;
-	//update
-	public int update(BoardVO boardVO) throws Exception;
-	//delete
+	public int add(BoardVO boardVO, MultipartFile[] attaches) throws Exception;
+	public int update(BoardVO boardVO, MultipartFile[] attaches) throws Exception;
 	public int delete(BoardVO boardVO) throws Exception;
+	public int fileDelete(BoardFileVO boardFileVO) throws Exception;
+	public BoardFileVO fileDetail(BoardFileVO boardFileVO) throws Exception;
 	
 }

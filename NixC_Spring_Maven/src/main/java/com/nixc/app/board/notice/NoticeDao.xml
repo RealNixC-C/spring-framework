@@ -4,19 +4,60 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.nixc.app.board.notice.NoticeDao">
-  
-  	<select id="detail" parameterType="NoticeVO" resultType="NoticeVO">
-  		SELECT *
-  		FROM notice
+  	<resultMap type="NoticeVO" id="noticeResultMap">
+  		<id column="board_no" property="boardNo"/>
+  		<result column="board_title" property="boardTitle"/>
+  		<result column="board_content" property="boardContent"/>
+  		<result column="board_writer" property="boardWriter"/>
+  		<result column="board_date" property="boardDate"/>
+  		<result column="board_hit" property="boardHit"/>
+  		<collection property="boardFileVOs" javaType="java.util.List" ofType="BoardFileVO">
+  			<id column="file_no" property="fileNo"/>
+  			<result column="ori_name" property="oriName"/>
+  			<result column="save_name" property="saveName"/>
+		</collection>
+  	</resultMap>
+  	
+  	<sql id="search">
+  		WHERE
+  		<choose>
+  			<when test="kind='k1'">
+  				board_title
+  			</when>
+  			<when test="kind='k2'">
+  				board_content
+  			</when>
+  			<otherwise>
+  				board_writer
+  			</otherwise>
+  		</choose> 
+  		LIKE CONCAT ('%', #{keyword}, '%')
+  	</sql>
+  	
+	<select id="list" resultType="NoticeVO" parameterType="Pager">
+		SELECT * FROM notice
+		<include refid="search"></include>
+		ORDER BY board_no DESC
+		LIMIT #{startIndex}, #{endIndex}
+	</select>
+	
+	<select id="totalCount" resultType="Long" parameterType="Pager">
+		SELECT COUNT(board_no) FROM notice
+		<include refid="search"></include>
+	</select>
+  	
+  	<select id="detail" parameterType="NoticeVO" resultMap="noticeResultMap">
+  		SELECT * FROM notice n
+  		LEFT JOIN notice_files nf USING(board_no)
   		WHERE board_no = ${boardNo}
   	</select>
   
 	<!-- ID는 DAO의 메서드명과 동일하게 작성 -->
-	<insert id="insert" parameterType="NoticeVO">
-		INSERT INTO notice(board_no, board_title, board_content, board_writer, board_date, board_hit)
-		VALUES
-		(NULL, #{boardTitle}, #{boardContent}, #{boardWriter}, now(), 0)
+	<insert id="add" parameterType="NoticeVO" useGeneratedKeys="true" keyProperty="boardNo">
+		INSERT INTO notice (board_title, board_content, board_writer, board_date, board_hit)
+		VALUES (#{boardTitle}, #{boardContent}, #{boardWriter}, now(), 0);
 	</insert>
+	
 	<update id="update" parameterType="NoticeVO">
 		UPDATE notice
 		SET board_title = #{boardTitle}, board_content = #{boardContent}, board_writer = #{boardWriter}
@@ -28,17 +69,32 @@
 		DELETE FROM notice
 		WHERE board_no = #{boardNo}
 	</delete>
+
+	<insert id="addFile" parameterType="BoardFileVO">
+		INSERT INTO notice_files (file_no, board_no, ori_name, save_name)
+		VALUES (NULL, #{boardNo}, #{oriName}, #{saveName})
+	</insert>	
 	
-	<select id="list" resultType="NoticeVO">
-		SELECT *
-		FROM notice
-		ORDER BY board_no DESC
+	<select id="fileDetail" parameterType="BoardFileVO" resultType="BoardFileVO">
+		SELECT * FROM notice_files
+		WHERE file_no = #{fileNo}
 	</select>
 	
-	<insert id="add" parameterType="NoticeVO">
-		INSERT INTO notice (board_title, board_content, board_writer, board_date, board_hit)
-		VALUES (#{boardTitle}, #{boardContent}, #{boardWriter}, now(), 0);
-	</insert>
+	<delete id="fileDelete" parameterType="BoardVO">
+		DELETE FROM notice_files
+		WHERE board_no = #{boardNo}
+	</delete>
+	
+	<delete id="fileDeleteOne" parameterType="BoardFileVO">
+		DELETE FROM notice_files
+		WHERE file_no = #{fileNo}
+	</delete>
+	
+	
+	
+
+	
+	
 	
 </mapper>
 

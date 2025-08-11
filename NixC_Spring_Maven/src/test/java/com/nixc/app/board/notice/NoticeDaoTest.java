@@ -3,16 +3,15 @@ package com.nixc.app.board.notice;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import com.nixc.app.board.BoardVO;
+import com.nixc.app.commons.Pager;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,16 +22,21 @@ class NoticeDaoTest {
 	@Autowired
 	private NoticeDao noticeDao;
 	
-	//@Test
+	@Test
 	void insertTest()throws Exception {
-		NoticeVO noticeVO = new NoticeVO();
-		noticeVO.setBoardTitle("title3");
-		noticeVO.setBoardContent("content3");
-		noticeVO.setBoardWriter("writer3");
-		int result = noticeDao.add(noticeVO);
+		for(int i = 0; i < 105 ; i++) {
+			NoticeVO noticeVO = new NoticeVO();
+			noticeVO.setBoardTitle("title" + i);
+			noticeVO.setBoardContent("content" + i);
+			noticeVO.setBoardWriter("writer" + i);
+			int result = noticeDao.add(noticeVO);
+			if(i%10 == 0) {
+				Thread.sleep(500);
+			}
+		}
 		
 		// 단정문
-		assertEquals(0, result);
+//		assertEquals(0, result);
 	}
 	
 	//@Test
@@ -68,11 +72,13 @@ class NoticeDaoTest {
 	}
 	
 	//@Test
-	public void list() throws Exception {
-		List<BoardVO> noticeList = noticeDao.list();
+	public void list(Pager pager) throws Exception {
+		List<BoardVO> noticeList = noticeDao.list(pager);
 		
 		assertNotEquals(0, noticeList);
 	}
+	
+	
 	
 
 }

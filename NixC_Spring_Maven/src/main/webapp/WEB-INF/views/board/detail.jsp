@@ -20,6 +20,9 @@
 				<div class="container-fluid d-flex justify-content-center" style="margin-top: 100px; height: 600px;">
 					<div class="w-50">
 						<!-- page content 내용 -->
+						<div>
+							<h2>${ board }</h2>
+						</div>
 						<div class="row bg-body-tertiary">
 							<div class="mx-auto h2">${ boardVO.boardTitle }</div>
 						</div>
@@ -34,11 +37,23 @@
 <%-- 							<div><c:out value="${ boardVO.boardContent }"/></div> --%>
 						</div>
 						<div>
+							<h2>첨부파일</h2>
+							<c:forEach items="${ boardVO.boardFileVOs }" var="VO">
+							<div>
+								<div><a href="./fileDown?fileNo=${ VO.fileNo }">${ VO.oriName }</a></div>
+								<div>${ VO.saveName }</div>
+							</div>
+							</c:forEach>
+						</div>
+						<div>
 							<form id="frm">
 								<input type="hidden" name="boardNo" value="${ boardVO.boardNo }">
 							</form>
 							<button class="btn btn-outline-success action" data-kind="u">수정</button>
 							<button class="btn btn-outline-danger action" data-kind="d">삭제</button>
+							<c:if test="${ board ne 'notice' }">
+								<button class="btn btn-outline-info action" data-kind="r">답글</button>
+							</c:if>
 						</div>
 					</div>
 				</div>
