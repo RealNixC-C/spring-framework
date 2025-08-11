@@ -14,5 +14,6 @@ public interface BoardService {
 	public int update(BoardVO boardVO, MultipartFile[] attaches) throws Exception;
 	public int delete(BoardVO boardVO) throws Exception;
 	public int fileDelete(BoardFileVO boardFileVO) throws Exception;
+	public BoardFileVO fileDetail(BoardFileVO boardFileVO) throws Exception;
 	
 }

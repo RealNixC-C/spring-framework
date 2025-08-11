@@ -120,5 +120,8 @@ public class NoticeService implements BoardService{
 		return noticeDao.fileDeleteOne(boardFileVO);
 	}
 	
-	
+	@Override
+	public BoardFileVO fileDetail(BoardFileVO boardFileVO) throws Exception {
+		return noticeDao.fileDetail(boardFileVO);
+	}
 }

@@ -143,7 +143,13 @@ public class QnaController {
 		return result;
 	}
 	
-	
+	@GetMapping("fileDown")
+	public String fileDown(Model model, BoardFileVO boardFileVO) throws Exception {
+		boardFileVO = qnaService.fileDetail(boardFileVO);
+		model.addAttribute("VO", boardFileVO);
+		
+		return "fileDownView";
+	}
 	
 	
 	

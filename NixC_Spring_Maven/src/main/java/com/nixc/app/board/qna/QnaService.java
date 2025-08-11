@@ -136,5 +136,10 @@ public class QnaService implements BoardService{
 		
 		return qnaDao.fileDeleteOne(boardFileVO);
 	}
+	
+	@Override
+	public BoardFileVO fileDetail(BoardFileVO boardFileVO) throws Exception {
+		return qnaDao.fileDetail(boardFileVO);
+	}
 
 }
