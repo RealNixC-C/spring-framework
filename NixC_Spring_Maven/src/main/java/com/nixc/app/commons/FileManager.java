@@ -36,9 +36,8 @@ public class FileManager {
 	
 	public boolean fileDelete(String dir, String fileName) throws Exception {
 		File file = new File(dir, fileName);
+		
 		return file.delete();
-		
-		
 	}
 	
 	

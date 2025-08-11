@@ -1,6 +1,7 @@
 package com.nixc.app.board.notice;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.nixc.app.board.BoardFileVO;
 import com.nixc.app.board.BoardVO;
 import com.nixc.app.commons.Pager;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -122,10 +122,16 @@ public class NoticeController {
 	}
 	
 	@PostMapping("boardFile")
+	@ResponseBody
 	public String boardFile(MultipartFile bf) throws Exception {
-		noticeService.boardFile(bf);
 		
-		return "";
+		return noticeService.boardFile(bf);
+	}
+	
+	@PostMapping("boardFileDelete")
+	@ResponseBody
+	public boolean boardFileDelete(String fileName) throws Exception {
+		return noticeService.boardFileDelete(fileName);
 	}
 	
 	

@@ -27,6 +27,9 @@ public class QnaService implements BoardService{
 	
 	@Value("${board.qna}")
 	String board;
+	
+	@Value("${board.file}")
+	String file;
 
 	@Override
 	public List<BoardVO> list(Pager pager) throws Exception {
@@ -140,6 +143,21 @@ public class QnaService implements BoardService{
 	@Override
 	public BoardFileVO fileDetail(BoardFileVO boardFileVO) throws Exception {
 		return qnaDao.fileDetail(boardFileVO);
+	}
+	
+	@Override
+	public String boardFile(MultipartFile multipartFile) throws Exception {
+		if(multipartFile == null || multipartFile.getSize() == 0) return null;
+		String fileName = fileManager.fileSave(upload + board + file, multipartFile);
+		
+		return "/files/"+ board + file + "/" + fileName;
+	}
+	
+	@Override
+	public boolean boardFileDelete(String fileName) throws Exception {
+		fileName = fileName.substring(fileName.lastIndexOf("/"));
+		
+		return fileManager.fileDelete(upload + board + file + "/", fileName);
 	}
 
 }

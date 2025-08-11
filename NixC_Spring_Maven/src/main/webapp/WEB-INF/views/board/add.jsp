@@ -80,10 +80,25 @@
 					})
 					.then(r=>r.text())
 					.then(r=>{
-						console.log(r);
+						$("#boardContent").summernote('editor.insertImage', r);
 					})
 					.catch(e => console.log(e))
+					
 					;
+				},
+				onMediaDelete: function(files) {
+					let f = $(files[0]).attr("src"); // /files/notice/****.jpg
+				
+					let params = new URLSearchParams();
+					params.append("fileName", f);
+					fetch("./boardFileDelete", {
+						method : "post",
+						body : params
+					})
+					.then(r=>r.json())
+					.then(r=>{
+						console.log("delete")
+					})
 				}
 			}
 		});

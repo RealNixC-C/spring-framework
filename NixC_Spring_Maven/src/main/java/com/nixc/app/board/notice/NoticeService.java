@@ -1,7 +1,9 @@
 package com.nixc.app.board.notice;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -129,9 +131,17 @@ public class NoticeService implements BoardService{
 	}
 	
 	@Override
-	public String boardFile(MultipartFile bf) throws Exception {
-		String fileName = fileManager.fileSave(upload + board + file, bf);
+	public String boardFile(MultipartFile multipartFile) throws Exception {
+		if(multipartFile == null || multipartFile.getSize() == 0) return null;
+		String fileName = fileManager.fileSave(upload + board + file, multipartFile);
 		
-		return fileName;
+		return "/files/"+ board + file + "/" + fileName;
+	}
+	
+	@Override
+	public boolean boardFileDelete(String fileName) throws Exception {
+		fileName = fileName.substring(fileName.lastIndexOf("/"));
+		
+		return fileManager.fileDelete(upload + board + file + "/", fileName);
 	}
 }
