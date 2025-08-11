@@ -29,6 +29,9 @@ public class NoticeService implements BoardService{
 	@Value("${board.notice}")
 	private String board;
 	
+	@Value("${board.file}")
+	private String file;
+	
 	@Override
 	public List<BoardVO> list(Pager pager) throws Exception {
 		// pager 객체는 controller에서부터 주소값을 가져왔기때문에 return하지않고
@@ -123,5 +126,12 @@ public class NoticeService implements BoardService{
 	@Override
 	public BoardFileVO fileDetail(BoardFileVO boardFileVO) throws Exception {
 		return noticeDao.fileDetail(boardFileVO);
+	}
+	
+	@Override
+	public String boardFile(MultipartFile bf) throws Exception {
+		String fileName = fileManager.fileSave(upload + board + file, bf);
+		
+		return fileName;
 	}
 }

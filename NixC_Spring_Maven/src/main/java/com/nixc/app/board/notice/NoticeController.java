@@ -121,6 +121,12 @@ public class NoticeController {
 		return "fileDownView";
 	}
 	
+	@PostMapping("boardFile")
+	public String boardFile(MultipartFile bf) throws Exception {
+		noticeService.boardFile(bf);
+		
+		return "";
+	}
 	
 	
 }

@@ -66,5 +66,27 @@
 	<!-- Modal, JS -->
 	<c:import url="/WEB-INF/views/include/tail.jsp"></c:import>
 	<script type="text/javascript" src="/js/board/board_add.js"></script>
+	<script type="text/javascript">
+		$("#boardContent").summernote({
+			callbacks: {
+				onImageUpload: function name(files) {
+					console.log("files", files[0]);
+					let f = new FormData();
+					f.append("bf", files[0])
+					
+					fetch("./boardFile", {
+						method : "POST",
+						body : f
+					})
+					.then(r=>r.text())
+					.then(r=>{
+						console.log(r);
+					})
+					.catch(e => console.log(e))
+					;
+				}
+			}
+		});
+	</script>
 </body>
 </html>

@@ -15,5 +15,6 @@ public interface BoardService {
 	public int delete(BoardVO boardVO) throws Exception;
 	public int fileDelete(BoardFileVO boardFileVO) throws Exception;
 	public BoardFileVO fileDetail(BoardFileVO boardFileVO) throws Exception;
+	public String boardFile(MultipartFile bf) throws Exception;
 	
 }
