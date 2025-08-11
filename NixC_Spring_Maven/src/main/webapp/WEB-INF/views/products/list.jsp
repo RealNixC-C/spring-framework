@@ -19,6 +19,7 @@
 			<div id="content">
 				<c:import url="/WEB-INF/views/include/topbar.jsp"></c:import>
 				<div class="container-fluid">
+					<div class="col-md-12 text-center">	<h2>${ board }</h2>	</div>
 					<!-- page content 내용 -->
 					<div class="row col-md-8 offset-md-2 ">
 						<table class="table">
