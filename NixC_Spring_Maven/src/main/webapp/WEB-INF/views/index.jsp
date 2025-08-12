@@ -20,6 +20,7 @@
 				<div class="container-fluid">
 					<!-- page content 내용 -->
 					<h1>Index</h1>
+					<h1><c:if test="${ not empty member }">${ member.name }</c:if></h1>
 				</div>
 			</div>
 		<!-- End Content -->

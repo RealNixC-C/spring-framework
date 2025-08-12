@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nixc.app.board.BoardVO;
 import com.nixc.app.commons.Pager;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
 @Slf4j
+@Transactional
 class NoticeDaoTest {
 
 	@Autowired
@@ -24,19 +26,14 @@ class NoticeDaoTest {
 	
 	@Test
 	void insertTest()throws Exception {
-		for(int i = 0; i < 105 ; i++) {
-			NoticeVO noticeVO = new NoticeVO();
-			noticeVO.setBoardTitle("title" + i);
-			noticeVO.setBoardContent("content" + i);
-			noticeVO.setBoardWriter("writer" + i);
-			int result = noticeDao.add(noticeVO);
-			if(i%10 == 0) {
-				Thread.sleep(500);
-			}
-		}
-		
+		NoticeVO noticeVO = new NoticeVO();
+		noticeVO.setBoardTitle("titleDelete");
+		noticeVO.setBoardContent("content");
+		noticeVO.setBoardWriter("writer");
+		int result = noticeDao.add(noticeVO);
+			
 		// 단정문
-//		assertEquals(0, result);
+		assertEquals(1, result);
 	}
 	
 	//@Test

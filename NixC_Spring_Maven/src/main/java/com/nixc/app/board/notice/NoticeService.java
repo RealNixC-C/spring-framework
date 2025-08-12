@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nixc.app.board.BoardFileVO;
@@ -15,6 +16,7 @@ import com.nixc.app.commons.FileManager;
 import com.nixc.app.commons.Pager;
 
 @Service
+@Transactional
 public class NoticeService implements BoardService{
 
 	@Autowired

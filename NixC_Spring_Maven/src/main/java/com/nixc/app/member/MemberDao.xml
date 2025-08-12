@@ -4,16 +4,51 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="com.nixc.app.member.MemberDao">
-	
+	<resultMap type="MemberVO" id="memberResultMap">
+		<id column="member_Id" property="memberId"/>
+		<result column="password" property="password"/>	
+		<result column="name" property="name"/>	
+		<result column="email" property="email"/>	
+		<result column="phone" property="phone"/>	
+		<result column="birth" property="birth"/>	
+		<result column="account_non_expired" property="accountNonExpired"/>	
+		<result column="account_non" property="accountNonLocked"/>	
+		<result column="credentials_non_expired" property="credentialsNonExpired"/>	
+		<result column="enabled" property="enabled"/>
+		<association property="profileVO" javaType="ProfileVO">
+			<id column="member_id" property="memberId"/>
+			<result column="ori_name" property="oriName"/>
+			<result column="save_name" property="saveName"/>
+		</association>
+		<collection property="roleVOs" javaType="java.util.List" ofType="RoleVO">
+			<id column="role_no" property="roleNo"/> 
+			<result column="role_name" property="roleName"/>
+		</collection>				
+		
+	</resultMap>	
+		
 	<insert id="insert" parameterType="MemberVO">
-		INSERT INTO members (member_id, password, name, email, phone, birth)
-		VALUES (#{memberId}, #{password}, #{name}, #{email}, #{phone}, #{birth});
+		INSERT INTO members (member_id, password, name, email, phone, birth, account_non_expired, account_non_locked, credentials_non_expired, enabled)
+		VALUES (#{memberId}, #{password}, #{name}, #{email}, #{phone}, #{birth} ,1, 1, 1 ,1);
 	</insert>
 	
 	<insert id="insertProfile">
 		INSERT INTO profile (member_id, save_name, ori_name)
-		VALUES (#{memberId}, #{save_name}, #{ori_name})
+		VALUES (#{memberId}, #{saveName}, #{oriName})	
 	</insert>
+	
+	<insert id="addRole" parameterType="java.util.Map">
+		INSERT INTO member_role (member_id, role_no)
+		VALUES (#{memberId}, #{roleNo})
+	</insert>
+	
+	<select id="login" parameterType="MemberVO">
+		SELECT * FROM members m
+		JOIN member_role mr USING (member_id)
+		JOIN role r USING (role_no)
+		JOIN profile f USING (member_id)
+		WHERE member_id = #{memberId}
+	</select>
 	
 </mapper>
 
