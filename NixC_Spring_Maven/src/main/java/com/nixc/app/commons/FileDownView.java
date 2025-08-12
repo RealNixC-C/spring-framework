@@ -36,10 +36,11 @@ public class FileDownView extends AbstractView{
 		
 		File file = new File(filePath, boardFileVO.getSaveName());
 		
-		// 총 파일의 크기 (윈도우는 다운속도, 받은량은알지만 전체 파일크기를 알지 못하기때문에 알려줘야함)
+		// 총 파일의 크기 (윈도우는 다운속도, 현재 다운받은 용량은알지만 전체 파일크기를 알지 못하기때문에 알려줘야함)
+		// 파일의 크기를 참조하여 다운 진행도를 표시할 수 있음
 		response.setContentLengthLong(file.length());
 		
-		// 파일 다운시 파일의 이름을 인코딩
+		// 파일 다운시 파일의 이름을 인코딩(파일 이름이 한글이라면 깨져있기때문)
 		String fileName = URLEncoder.encode(boardFileVO.getOriName(), "UTF-8");
 		
 		// Header 설정

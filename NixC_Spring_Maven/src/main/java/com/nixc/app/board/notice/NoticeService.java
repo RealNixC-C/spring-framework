@@ -71,6 +71,7 @@ public class NoticeService implements BoardService{
 		}
 		return result;
 	}
+	
 	@Override
 	public int update(BoardVO boardVO, MultipartFile[] attaches) throws Exception {
 
