@@ -32,7 +32,7 @@
 			                                <div class="form-group row">
 			                                    <div class="col-sm-12 mb-3 mb-sm-0">
 			                                        <input type="text" class="form-control form-control-user" 
-			                                        	name="id" id="memberId" placeholder="아이디">
+			                                        	name="memberId" id="memberId" placeholder="아이디">
 			                                    </div>
 			                                </div>
 			                                 <div class="form-group row">

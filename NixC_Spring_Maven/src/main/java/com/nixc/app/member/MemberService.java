@@ -6,12 +6,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nixc.app.commons.FileManager;
+import com.nixc.app.transaction.Transaction;
 
 @Service
 public class MemberService {
 
 	@Autowired
 	private MemberDao memberDao;
+
+	@Autowired
+	private Transaction transaction;
 	
 	@Autowired
 	private FileManager fileManager;
@@ -34,7 +38,10 @@ public class MemberService {
 			profileVO.setOriName(attaches.getOriginalFilename());
 		}
 		
-		return memberDao.insert(memberVO);
+		
+		transaction.t2();
+		
+		return result;
 	}
 	
 }
