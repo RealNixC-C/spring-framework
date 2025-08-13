@@ -151,18 +151,24 @@
       <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="mr-2 d-none d-lg-inline text-gray-600 small">${ member.name }</span>
+              <span class="mr-2 d-none d-lg-inline text-gray-600 small">${ member.memberId }</span>
+              <c:if test="${ empty member.profileVO.saveName ne 'default.jsg' }">
+              	<img class="img-profile rounded-circle" src="/file/member/${ member.profileVO.saveName }">
+              </c:if>
+              <c:if test="${ empty member.profileVO.saveName eq 'default.jsp' }">
+              	<img class="img-profile rounded-circle" src="/static/img/default.png">
+              </c:if>
           </a>
           <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="/member/detail">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    프로틸
+                    프로필
                 </a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="/member/cartList">
                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    설정
+                    장바구니
                 </a>
                 <a class="dropdown-item" href="#">
                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>

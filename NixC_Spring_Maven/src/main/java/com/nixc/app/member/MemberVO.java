@@ -3,6 +3,8 @@ package com.nixc.app.member;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.nixc.app.products.ProductVO;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

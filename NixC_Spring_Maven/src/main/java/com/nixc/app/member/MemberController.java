@@ -1,12 +1,21 @@
 package com.nixc.app.member;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.nixc.app.products.ProductVO;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +27,14 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
+	
+	@Value("${board.cartList}")
+	String name;
+	
+	@ModelAttribute("board")
+	String getboard() {
+		return name;
+	}
 	
 	@GetMapping("login")
 	public String login() throws Exception {
@@ -68,6 +85,43 @@ public class MemberController {
 		 session.invalidate();
 		
 		return "redirect:/";
+	}
+	
+	@GetMapping("detail")
+	public String detail(HttpSession session) throws Exception {
+		
+		
+		return "member/detail";
+	}
+	
+//	public String detail(MemberVO memberVO) {
+//		
+//	}
+	
+	@PostMapping("addCart")
+	@ResponseBody
+	public int addCart(ProductVO productVO, HttpSession session) throws Exception {
+		MemberVO memberVO = (MemberVO)session.getAttribute("member");
+		
+		if(memberVO == null) {
+			return 0;
+		}
+		Map<String, Object> map = new HashMap<>();
+		map.put("productNo", productVO.getProductNo());
+		map.put("memberId", memberVO.getMemberId());
+		
+		int result = memberService.addCart(map);
+		
+		return result;
+	}
+	
+	@GetMapping("cartList")
+	public String cartList(Model model, HttpSession session) throws Exception {
+		MemberVO memberVO = (MemberVO)session.getAttribute("member");
+		List<ProductVO> list = memberService.cartList(memberVO);
+		model.addAttribute("list", list);
+		
+		return "member/cartList";
 	}
 	
 }

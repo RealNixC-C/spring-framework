@@ -1,6 +1,7 @@
 package com.nixc.app.member;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nixc.app.commons.FileManager;
+import com.nixc.app.products.ProductVO;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -57,6 +59,16 @@ public class MemberService {
 		}
 		
 		return null;
+	}
+	
+	public int addCart(Map<String, Object> map) throws Exception {
+		return memberDao.addCart(map);
+	}
+	
+	public List<ProductVO> cartList (MemberVO memberVO) throws Exception {
+		// 나중에 페이징 처리 해야 함 
+		
+		return memberDao.cartList(memberVO);
 	}
 	
 }

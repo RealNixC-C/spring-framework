@@ -5,6 +5,7 @@ console.log("product");
 
 const frm = document.getElementById("frm")
 const buttons = document.querySelectorAll(".action");
+const cart = document.getElementById("cart");
 
 buttons.forEach(function (b){
 	b.addEventListener("click", function(e){
@@ -28,3 +29,39 @@ buttons.forEach(function (b){
 		frm.submit();
 	})
 })
+
+
+cart.addEventListener('click', ()=>{
+	
+	let productNo = cart.getAttribute('data-product-no');
+	let params = new URLSearchParams;
+	params.append("productNo", productNo)
+	
+	fetch("/member/addCart", {
+		method : 'post',
+		body : params
+	})
+	.then(r =>r.json())
+	.then(r => {
+		if(confirm(`계속 쇼핑하시겠습니까?`)) {
+			return;
+		} else {
+			location.href="./list";
+		}
+	})
+	.catch(e=>{
+		alert("등록 실패")
+	})
+	
+	
+})
+
+
+
+
+
+
+
+
+
+

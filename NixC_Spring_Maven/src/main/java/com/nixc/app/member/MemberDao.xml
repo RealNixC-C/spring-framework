@@ -23,7 +23,7 @@
 		<collection property="roleVOs" javaType="java.util.List" ofType="RoleVO">
 			<id column="role_no" property="roleNo"/> 
 			<result column="role_name" property="roleName"/>
-		</collection>				
+		</collection>
 		
 	</resultMap>	
 		
@@ -48,6 +48,20 @@
 		JOIN role r USING (role_no)
 		JOIN profile f USING (member_id)
 		WHERE member_id = #{memberId}
+	</select>
+	
+	<insert id="addCart" parameterType="java.util.Map">
+		INSERT INTO cart (member_id, product_no)
+		VALUES (#{memberId}, #{productNo})
+	</insert>
+	
+	<select id="cartList" resultType="ProductVO" parameterType="MemberVO">
+		SELECT *
+		FROM products p
+		INNER JOIN products_kind pk USING(kind_no)
+		WHERE p.product_no IN (
+			SELECT product_no FROM cart WHERE member_id= #{memberId}
+			)
 	</select>
 	
 </mapper>
