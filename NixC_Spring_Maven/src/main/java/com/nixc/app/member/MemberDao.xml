@@ -42,7 +42,7 @@
 		VALUES (#{memberId}, #{roleNo})
 	</insert>
 	
-	<select id="login" parameterType="MemberVO">
+	<select id="login" parameterType="MemberVO" resultMap="memberResultMap">
 		SELECT * FROM members m
 		JOIN member_role mr USING (member_id)
 		JOIN role r USING (role_no)

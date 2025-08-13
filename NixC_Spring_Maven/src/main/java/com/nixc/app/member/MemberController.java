@@ -62,10 +62,10 @@ public class MemberController {
 		
 		// 로그인 세션 지우는법
 		// 방법 1
-		session.removeAttribute("member");
+//		session.removeAttribute("member");
 		
 		// 방법 2
-		// session.invalidate();
+		 session.invalidate();
 		
 		return "redirect:/";
 	}
