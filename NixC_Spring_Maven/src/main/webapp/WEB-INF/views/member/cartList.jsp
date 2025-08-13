@@ -46,7 +46,7 @@
 												<input class="form-check-input ch" type="checkbox" value="${ l.productNo }">
 											</div>
 										</td>
-										<td><a href="/product/detail?productNo="${ l.productNo }>${ l.productName }</a></td>
+										<td><a href="/products/detail?productNo=${ l.productNo }">${ l.productName }</a></td>
 										<td>${ l.productRate }</td>
 										<td>${ l.kindNo }</td>
 									</tr>

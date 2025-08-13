@@ -34,8 +34,8 @@ public class MemberService {
 		
 		ProfileVO profileVO = new ProfileVO();
 		profileVO.setMemberId(memberVO.getMemberId());
-		profileVO.setOriName("default.jsp");
-		profileVO.setSaveName("default.jsp");
+		profileVO.setOriName("default.jpg");
+		profileVO.setSaveName("default.jpg");
 		if(attaches != null && !attaches.isEmpty()) {
 			profileVO.setSaveName(fileManager.fileSave(upload + board, attaches));
 			profileVO.setOriName(attaches.getOriginalFilename());

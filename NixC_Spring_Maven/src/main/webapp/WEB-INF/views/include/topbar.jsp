@@ -156,7 +156,7 @@
               	<img class="img-profile rounded-circle" src="/file/member/${ member.profileVO.saveName }">
               </c:if>
               <c:if test="${ empty member.profileVO.saveName eq 'default.jsp' }">
-              	<img class="img-profile rounded-circle" src="/static/img/default.png">
+              	<img class="img-profile rounded-circle" src="/img/default.png">
               </c:if>
           </a>
           <!-- Dropdown - User Information -->

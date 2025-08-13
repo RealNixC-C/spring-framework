@@ -2,12 +2,10 @@ package com.nixc.app.interceptors;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nixc.app.board.BoardVO;
-import com.nixc.app.board.notice.NoticeDao;
 import com.nixc.app.member.MemberVO;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,18 +13,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class UpdateWriterCheckInterceptor implements HandlerInterceptor{
 
-//	@Autowired
-//	private NoticeDao noticeDao;
-//	
-//	@Override
-//	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-//			throws Exception {
-//		
-//		
-//		return HandlerInterceptor.super.preHandle(request, response, handler);
-//	}
-	
-	
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {

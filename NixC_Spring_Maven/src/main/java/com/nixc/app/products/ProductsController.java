@@ -22,7 +22,7 @@ public class ProductsController {
 	@ModelAttribute("board")
 	private String getBoard() {
 		return name;
-	};
+	}
 	
 	@Autowired
 	private ProductService productService;
@@ -36,7 +36,6 @@ public class ProductsController {
 	
 	@GetMapping("detail")
 	public void detail(Model model, ProductVO productVO) throws Exception {
-		
 		model.addAttribute("productVO", productService.detail(productVO));
 	}
 	
