@@ -42,7 +42,8 @@
 							<button class="btn btn-outline-danger action" data-kind="d">삭제</button>
 						</div>
 						<div>
-							<button type="button" class="btn btn-primary" id="cart" data-product-no="${ productVO.productNo }">장바구니</button>
+							<button class="btn btn-primary" id="cart" data-product-no="${ productVO.productNo }">장바구니</button>
+							<button class="btn btn btn-success" id="sign_up" data-product-no="${ productVO.productNo }">가입</button>
 						</div>
 					</div>
 				</div>

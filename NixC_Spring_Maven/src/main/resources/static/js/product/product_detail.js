@@ -1,11 +1,12 @@
 /**
  * 
  */
-console.log("product");
+console.log("product.js");
 
 const frm = document.getElementById("frm")
 const buttons = document.querySelectorAll(".action");
 const cart = document.getElementById("cart");
+const signUp = document.getElementById("sign_up");
 
 buttons.forEach(function (b){
 	b.addEventListener("click", function(e){
@@ -43,19 +44,21 @@ cart.addEventListener('click', ()=>{
 	})
 	.then(r =>r.json())
 	.then(r => {
-		if(confirm(`계속 쇼핑하시겠습니까?`)) {
-			return;
-		} else {
-			location.href="./list";
+		if(confirm(`장바구니로 이동하시겠습니까?`)) {
+			location.href="./cartList";
 		}
 	})
 	.catch(e=>{
 		alert("등록 실패")
 	})
-	
-	
 })
 
+signUp.addEventListener("click", ()=> {
+	if(confirm("상품에 가입하시겠습니까?")) {
+		const productNo = signUp.getAttribute("data-product-no")		
+		location.href="/account/add?productNo=" + productNo;
+	}	
+})
 
 
 

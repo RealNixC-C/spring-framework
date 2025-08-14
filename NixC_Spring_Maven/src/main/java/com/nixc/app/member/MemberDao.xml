@@ -50,11 +50,6 @@
 		WHERE member_id = #{memberId}
 	</select>
 	
-	<insert id="addCart" parameterType="java.util.Map">
-		INSERT INTO cart (member_id, product_no)
-		VALUES (#{memberId}, #{productNo})
-	</insert>
-	
 	<select id="cartList" resultType="ProductVO" parameterType="MemberVO">
 		SELECT *
 		FROM products p
@@ -63,6 +58,23 @@
 			SELECT product_no FROM cart WHERE member_id= #{memberId}
 			)
 	</select>
+	
+	<insert id="addCart" parameterType="java.util.Map">
+		INSERT INTO cart (member_id, product_no)
+		VALUES (#{memberId}, #{productNo})
+	</insert>
+	
+	<delete id="deleteCart" parameterType="java.util.Map">
+		DELETE FROM cart
+		<where>
+			member_id = #{memberId} 
+			AND
+			product_no IN
+			<foreach collection="list" item="item" open="(" close=")" separator=",">
+				#{item}
+			</foreach>
+		</where>
+	</delete>
 	
 </mapper>
 

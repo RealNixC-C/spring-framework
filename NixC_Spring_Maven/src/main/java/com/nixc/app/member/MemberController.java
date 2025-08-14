@@ -88,15 +88,11 @@ public class MemberController {
 	}
 	
 	@GetMapping("detail")
-	public String detail(HttpSession session) throws Exception {
-		
+	public String detail() throws Exception {
 		
 		return "member/detail";
 	}
 	
-//	public String detail(MemberVO memberVO) {
-//		
-//	}
 	
 	@PostMapping("addCart")
 	@ResponseBody
@@ -122,6 +118,14 @@ public class MemberController {
 		model.addAttribute("list", list);
 		
 		return "member/cartList";
+	}
+
+	@PostMapping("deleteCart")
+	public String deleteCart(HttpSession session, Long[] productNo) throws Exception {
+		MemberVO memberVO = (MemberVO)session.getAttribute("member");
+		memberService.deleteCart(memberVO, productNo);
+		
+		return "redirect:./cartList";
 	}
 	
 }

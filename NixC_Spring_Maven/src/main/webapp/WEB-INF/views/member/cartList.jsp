@@ -24,35 +24,41 @@
 						<div class="col-md-12 text-center">
 							<h2>${ board }</h2>
 						</div>
-						<table class="table text-center">
-							<thead>
-								<tr class="table-primary">
-									<th>
-										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value="" id="checkAll">
-											<label class="form-check-label" for="checkDefault">전체 선택</label>
-										</div>
-									</th>
-									<th>상품명</th>
-									<th>이자율</th>
-									<th>종류</th>
-								</tr>							
-							</thead>
-							<tbody>
-								<c:forEach var="l" items="${ list }">
-									<tr>
-										<td>
+						<form id="cart_frm" action="./deleteCart" method="post">
+							<table class="table text-center">
+								<thead>
+									<tr class="table-primary">
+										<th>
 											<div class="form-check">
-												<input class="form-check-input ch" type="checkbox" value="${ l.productNo }">
+												<input class="form-check-input" type="checkbox" value="" id="checkAll">
+												<label class="form-check-label" for="checkDefault">전체 선택</label>
 											</div>
-										</td>
-										<td><a href="/products/detail?productNo=${ l.productNo }">${ l.productName }</a></td>
-										<td>${ l.productRate }</td>
-										<td>${ l.kindNo }</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
+										</th>
+										<th>상품명</th>
+										<th>이자율</th>
+										<th>종류</th>
+									</tr>							
+								</thead>
+								<tbody>
+									<c:forEach var="l" items="${ list }">
+										<tr>
+											<td>
+												<div class="form-check">
+													<input class="form-check-input ch" type="checkbox" name="productNo" value="${ l.productNo }">
+												</div>
+											</td>
+											<td><a href="/products/detail?productNo=${ l.productNo }">${ l.productName }</a></td>
+											<td>${ l.productRate }</td>
+											<td>${ l.kindNo }</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</form>
+						<div>
+							<button type="submit" class="btn btn-danger" id="btn_cart_delete">장바구니 삭제</button>
+							<button type="submit" class="btn btn-primary" id="btn_sign_up">가입</button>
+						</div>
 						
 <!-- 						<div> -->
 <!-- 							<nav aria-label="Page navigation example"> -->

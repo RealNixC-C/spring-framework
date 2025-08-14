@@ -1,5 +1,6 @@
 package com.nixc.app.member;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,14 +62,22 @@ public class MemberService {
 		return null;
 	}
 	
-	public int addCart(Map<String, Object> map) throws Exception {
-		return memberDao.addCart(map);
-	}
-	
 	public List<ProductVO> cartList (MemberVO memberVO) throws Exception {
 		// 나중에 페이징 처리 해야 함 
 		
 		return memberDao.cartList(memberVO);
+	}
+	
+	public int addCart(Map<String, Object> map) throws Exception {
+		return memberDao.addCart(map);
+	}
+	
+	public int deleteCart(MemberVO memberVO, Long[] productNo) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberId", memberVO.getMemberId());
+		map.put("list", Arrays.asList(productNo));
+		
+		return memberDao.deleteCart(map);
 	}
 	
 }
