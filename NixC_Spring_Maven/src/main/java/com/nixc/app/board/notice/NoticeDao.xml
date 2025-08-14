@@ -60,7 +60,7 @@
 	
 	<update id="update" parameterType="NoticeVO">
 		UPDATE notice
-		SET board_title = #{boardTitle}, board_content = #{boardContent}, board_writer = #{boardWriter}
+		SET board_title = #{boardTitle}, board_content = #{boardContent}
 		<where>
 			board_no = #{boardNo};
 		</where>
