@@ -24,8 +24,7 @@
 						<form method="post" action="" enctype="multipart/form-data">
 							<input type="hidden" name="boardNo" value="${ boardVO.boardNo }">
 							<div class="col-md-12 mb-3">
-								<label for="boardWriter">작성자</label>
-								<input type="text" class="form-control" name="boardWriter" id="boardWriter" value="${ boardVO.boardWriter }" required>
+								<span>${ member.memberId }</span>
 							</div>
 							<div class="col-md-12 mb-3">
 								<label for="boardTitle">제목</label> 

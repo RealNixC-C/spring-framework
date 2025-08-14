@@ -16,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.nixc.app.board.BoardFileVO;
 import com.nixc.app.board.BoardVO;
 import com.nixc.app.commons.Pager;
+import com.nixc.app.member.MemberVO;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -60,7 +62,9 @@ public class QnaController {
 	}
 	
 	@PostMapping("add")
-	public String add(Model model, QnaVO qnaVO, MultipartFile[] attaches) throws Exception {
+	public String add(Model model, QnaVO qnaVO, MultipartFile[] attaches, HttpSession session) throws Exception {
+		MemberVO memberVO = (MemberVO)session.getAttribute("member");
+		qnaVO.setBoardWriter(memberVO.getMemberId());
 		int result = qnaService.add(qnaVO, attaches);
 		
 		String msg = "등록 실패";

@@ -19,7 +19,7 @@
                 <div class="modal-body">로그아웃을 하시려면 아래 "로그아웃" 버튼을 눌러주세요.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                    <a class="btn btn-primary" href="login.html">로그아웃</a>
+                    <a class="btn btn-primary" href="/member/logout">로그아웃</a>
                 </div>
             </div>
         </div>
