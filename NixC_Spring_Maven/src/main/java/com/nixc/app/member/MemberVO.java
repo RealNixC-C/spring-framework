@@ -3,6 +3,9 @@ package com.nixc.app.member;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.nixc.app.member.validation.AddGroup;
+import com.nixc.app.member.validation.UpdateGroup;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,23 +20,24 @@ import lombok.ToString;
 @ToString
 public class MemberVO {
 
-	@NotBlank
+	@NotBlank(message = "아이디를 입력하세요", groups = AddGroup.class)
 	private String memberId;
 	// 최소 최대 사이즈
-	@Size(min = 4, max = 12)
+	@Size(min = 4, max = 12, groups = AddGroup.class)
 	private String password;
-	@Size(min = 4, max = 12)
 	private String passwordConfirm;
-	@NotBlank
+	@NotBlank(groups = {AddGroup.class, UpdateGroup.class})
 	private String name;
-	@Email
+	@Email(groups = {AddGroup.class, UpdateGroup.class})
+	@NotBlank(groups= {AddGroup.class, UpdateGroup.class})
 	private String email;
 	// 정규식, regexp안에 정규식 작성
 	// @Pattern(regexp = "")
+	@NotBlank(groups = {AddGroup.class, UpdateGroup.class})
 	private String phone;
 	// 가져온 시간이 과거인가
 	@NotNull
-	@Past
+	@Past(groups = {AddGroup.class, UpdateGroup.class})
 	private LocalDate birth;
 	private boolean accountNonExpired; 
 	private boolean accountNonLocked;

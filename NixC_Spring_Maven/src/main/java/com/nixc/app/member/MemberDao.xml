@@ -41,6 +41,12 @@
 		INSERT INTO member_role (member_id, role_no)
 		VALUES (#{memberId}, #{roleNo})
 	</insert>
+		
+	<update id="update" parameterType="MemberVO">
+		UPDATE members
+		SET name = #{name}, email = #{email}, phone = #{phone}, birth = #{birth}
+		WHERE member_id = #{memberId}
+	</update>
 	
 	<select id="login" parameterType="MemberVO" resultMap="memberResultMap">
 		SELECT * FROM members m
@@ -75,10 +81,7 @@
 			</foreach>
 		</where>
 	</delete>
-	
-	<select id="memberList" resultMap="memberResultMap">
-		SELECT member_id FROM members
-	</select>
+
 	
 </mapper>
 

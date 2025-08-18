@@ -49,16 +49,13 @@ public class MemberService {
 		}
 		
 		// 3. ID 중복 검사
-		List<MemberVO> memList = memberDao.memberList();
-		if(memList != null && memList.size() != 0) {
-			for (MemberVO member : memList) {
-				if(member.getMemberId().equals(memberVO.getMemberId())) {
-					bindingResult.rejectValue("memberId", "join.memberId.duplicate");
-					hasError = true;
-					break;
-				}
-			}
+		MemberVO result = memberDao.login(memberVO);
+		
+		if(result != null) {
+			hasError = true;
+			bindingResult.rejectValue("memberId", "join.memberId.duplicate");
 		}
+		
 		return hasError;
 	}
 	
@@ -81,6 +78,10 @@ public class MemberService {
 		result = memberDao.addRole(map);
 		
 		return result;
+	}
+	
+	public int update(MemberVO memberVO) throws Exception {
+		return memberDao.update(memberVO);
 	}
 	
 	public MemberVO login(MemberVO memberVO) throws Exception {

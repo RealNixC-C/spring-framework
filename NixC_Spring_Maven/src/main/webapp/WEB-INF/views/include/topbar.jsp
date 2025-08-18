@@ -166,13 +166,13 @@
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     프로필
                 </a>
-                <a class="dropdown-item" href="/member/cartList">
+                <a class="dropdown-item" href="/member/update">
                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    장바구니
+                    회원 정보 수정
                 </a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="/member/cartList">
                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                    활동기록
+                    장바구니
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">

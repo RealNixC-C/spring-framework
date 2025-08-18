@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>JOIN</title>
+<title>index</title>
 
 <c:import url="/WEB-INF/views/include/head_css.jsp"></c:import>
 </head>
@@ -27,28 +27,10 @@
 			                    <div class="col-lg-6">
 			                        <div class="p-5">
 			                            <div class="text-center">
-			                                <h1 class="h4 text-gray-900 mb-4">회원 가입</h1>
+			                                <h1 class="h4 text-gray-900 mb-4">회원 정보 수정</h1>
 			                            </div>
-			                            <hr>
-			                            <form:form cssClass="user" method="post" modelAttribute="memberVO" encType="multipart/form-data">
-			                                <div class="form-group row">
-			                                    <div class="col-sm-12 mb-3 mb-sm-0">
-			                                    	<form:input placeholder="아이디" path="memberId" cssClass="form-control form-control-user" />
-			                                    	<form:errors path="memberId" ></form:errors>
-			                                    </div>
-			                                </div>
+			                            <form:form cssClass="user" modelAttribute="memberVO" method="post" encType="multipart/form-data">
 			                                 <div class="form-group row">
-			                                    <div class="col-sm-6 mb-3 mb-sm-0">
-			                                    	<form:password path="password" placeholder="비밀번호" cssClass="form-control form-control-user"/>
-			                                    	<form:errors path="password" ></form:errors>
-			                                    </div>
-			                                    <div class="col-sm-6">
-			                                        <input type="password" class="form-control form-control-user"
-			                                            name="passwordConfirm" id="passwordConfirm" placeholder="비밀번호 확인">
-			                                        <form:errors path="passwordConfirm"></form:errors>
-			                                    </div>
-			                                </div>
-			                                <div class="form-group row">
 			                                    <div class="col-sm-12 mb-3 mb-sm-0">
 			                                    	<form:input path="name" placeholder="이름" cssClass="form-control form-control-user"/>
 			                                    	<form:errors path="name" ></form:errors>
@@ -63,16 +45,14 @@
 			                                	<form:errors path="phone" ></form:errors>
 			                                </div>
 			                                <div class="form-group">
-			                                    <input type="date" class="form-control form-control-user" 
-			                                    name="birth" id="birth" placeholder="생일">
+			                                    <input type="date" class="form-control form-control-user" name="birth" id="birth" placeholder="생일" value="${ memberVO.birth }">
 			                                    <form:errors path="birth"></form:errors>
 			                                </div>
 			                                 <div class="form-group">
 			                              	 	<input type="file" class="form-control form-control-user" name="attaches">
 			                                </div>
-			                                <button class="btn btn-primary btn-user btn-block">가입</button>
+			                                <button class="btn btn-primary btn-user btn-block">수정</button>
 			                            </form:form>
-			                            <hr>
 			                        </div>
 			                    </div>
 			                </div>

@@ -45,7 +45,7 @@ cart.addEventListener('click', ()=>{
 	.then(r =>r.json())
 	.then(r => {
 		if(confirm(`장바구니로 이동하시겠습니까?`)) {
-			location.href="./cartList";
+			location.href="/member/cartList";
 		}
 	})
 	.catch(e=>{

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.nixc.app.account.AccountController;
+import com.nixc.app.member.validation.AddGroup;
+import com.nixc.app.member.validation.UpdateGroup;
 import com.nixc.app.products.ProductVO;
 
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -27,11 +30,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MemberController {
 
+    private final AccountController accountController;
+
 	@Autowired
 	private MemberService memberService;
 	
 	@Value("${board.cartList}")
 	String name;
+
+    MemberController(AccountController accountController) {
+        this.accountController = accountController;
+    }
 	
 	@ModelAttribute("board")
 	String getboard() {
@@ -63,7 +72,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("join")
-	public String join(Model model, @Valid MemberVO memberVO, BindingResult bindingResult, MultipartFile attaches) throws Exception{
+	public String join(Model model, @Validated(AddGroup.class) MemberVO memberVO, BindingResult bindingResult, MultipartFile attaches) throws Exception{
 		
 		boolean check = memberService.hasMemberError(memberVO, bindingResult);
 		
@@ -81,6 +90,33 @@ public class MemberController {
 		model.addAttribute("url", url);
 		
 		return "commons/result";
+	}
+	
+	@GetMapping("update")
+	public String update(HttpSession session, Model model) {
+		MemberVO memberVO = (MemberVO)session.getAttribute("member");
+		model.addAttribute("memberVO", memberVO);
+		
+		return "member/memberUpdate";
+	}
+	
+	@PostMapping("update")
+	public String update(@Validated(UpdateGroup.class) MemberVO memberVO, BindingResult bindingResult, MultipartFile profile, HttpSession session) throws Exception {
+		
+		if(bindingResult.hasErrors()) {
+			return "member/memberUpdate";
+		}
+		MemberVO VO = (MemberVO)session.getAttribute("member");
+		memberVO.setMemberId(VO.getMemberId());
+		int result = memberService.update(memberVO);
+		
+		if(result > 0) {
+			memberVO.setPassword(VO.getPassword());
+			memberVO = memberService.login(memberVO);
+			session.setAttribute("member", memberVO);
+		}
+		
+		return "redirect:./detail";
 	}
 	
 	@GetMapping("logout")
