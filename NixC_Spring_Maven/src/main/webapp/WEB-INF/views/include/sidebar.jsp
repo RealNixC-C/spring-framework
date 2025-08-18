@@ -2,14 +2,14 @@
     pageEncoding="UTF-8"%>
     
     <!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion d-flex flex-column"  id="accordionSidebar">
 
            <!-- Sidebar - Brand -->
-     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+     <a class="sidebar-brand d-flex align-items-center justify-content-center flex-column" href="/">
          <div class="sidebar-brand-icon rotate-n-15">
              <i class="fas fa-laugh-wink"></i>
          </div>
-         <div class="sidebar-brand-text mx-3">스프링<sup></sup></div>
+         <div class="sidebar-brand-text mx-3">Spring Tool</div>
      </a>
 
      <!-- Divider -->
@@ -113,5 +113,6 @@
      <div class="text-center d-none d-md-inline">
          <button class="rounded-circle border-0" id="sidebarToggle"></button>
      </div>
-
+	 <li class="nav-item mt-auto"><a class="nav-link" href="/?lang=ko">KO</a></li>
+	 <li class="nav-item"><a class="nav-link" href="/?lang=en">EN</a></li>
  </ul>

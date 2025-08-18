@@ -79,7 +79,6 @@ public class MemberController {
 		if(check) {
 			return "member/join";
 		}
-		
 		int result = memberService.insert(memberVO, attaches);
 		
 		String msg = "가입 실패";

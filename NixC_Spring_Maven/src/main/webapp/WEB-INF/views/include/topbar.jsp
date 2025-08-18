@@ -9,8 +9,7 @@
   </button>
 
   <!-- Topbar Search -->
-  <form
-      class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+  <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
       <div class="input-group">
           <input type="text" class="form-control bg-light border-0 small" placeholder="검색..."
               aria-label="Search" aria-describedby="basic-addon2">
@@ -22,7 +21,7 @@
       </div>
   </form>
 
-	<c:if test="${ not empty member }">
+  <c:if test="${ not empty member }">
   <!-- Topbar Navbar -->
   <ul class="navbar-nav ml-auto">
       <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -186,13 +185,9 @@
 	
 	<c:if test="${ empty member }">
 		<ul class="navbar-nav ml-auto">
-			<li class="nav-item"><a class="btn btn-primary" href="/member/login">로그인</a></li>
-			<li class="nav-item"><a class="btn btn-primary ml-2" href="/member/join">회원가입</a></li>
+			<li class="nav-item"><a class="btn btn-primary col-md" href="/member/login">로그인</a></li>
+			<li class="nav-item"><a class="btn btn-primary ml-2 col-md" href="/member/join">회원가입</a></li>
 		</ul>
 	</c:if>
-	<ul>
-		<li><a href="/?lang=ko">KO</a></li>
-		<li><a href="/?lang=en">EN</a></li>
-	</ul>
 </nav>
 
