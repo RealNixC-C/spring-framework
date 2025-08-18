@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,14 +22,16 @@
 				<div class="container-fluid">
 					<div class="w-75 mx-auto">
 						<!-- page content 내용 -->
-						<form method="post" action="" enctype="multipart/form-data">
-							<input type="hidden" name="boardNo" value="${ boardVO.boardNo }">
+						<!-- model에  -->
+						<form:form method="post" modelAttribute="boardVO" enctype="multipart/form-data">
+							<form:hidden path="boardNo"/>
 							<div class="col-md-12 mb-3">
 								<span>${ member.memberId }</span>
 							</div>
 							<div class="col-md-12 mb-3">
-								<label for="boardTitle">제목</label> 
-								<input type="text" class="form-control" name="boardTitle" id="boardTitle" value="${ boardVO.boardTitle }" required>
+								<label for="boardTitle">제목</label>
+								<form:input path="boardTitle" cssClass="form-control"/> 
+								<form:errors path="boardTitle"></form:errors>
 							</div>
 							<div class="col-md-12 mb-3">
 								<label for="boardContent">내용</label>
@@ -51,7 +54,7 @@
 							<div class="" id="result" data-file-count="${fn:length(boardVO.boardFileVOs)}">
 								<!-- 여기에 추가 -->
 							</div>
-						</form>
+						</form:form>
 					</div>
 				</div>
 			</div>

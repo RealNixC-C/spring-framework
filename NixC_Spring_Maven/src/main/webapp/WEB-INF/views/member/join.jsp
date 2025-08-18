@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,53 +29,50 @@
 			                            <div class="text-center">
 			                                <h1 class="h4 text-gray-900 mb-4">회원 가입</h1>
 			                            </div>
-			                            <form class="user" action="" method="post" encType="multipart/form-data">
+			                            <hr>
+			                            <form:form cssClass="user" method="post" modelAttribute="memberVO" encType="multipart/form-data">
 			                                <div class="form-group row">
 			                                    <div class="col-sm-12 mb-3 mb-sm-0">
-			                                        <input type="text" class="form-control form-control-user" 
-			                                        	name="memberId" id="memberId" placeholder="아이디">
+			                                    	<form:input placeholder="아이디" path="memberId" cssClass="form-control form-control-user" />
+			                                    	<form:errors path="memberId" ></form:errors>
 			                                    </div>
 			                                </div>
 			                                 <div class="form-group row">
 			                                    <div class="col-sm-6 mb-3 mb-sm-0">
-			                                        <input type="password" class="form-control form-control-user"
-			                                            name="password" id="password" placeholder="비밀번호">
+			                                    	<form:password path="password" placeholder="비밀번호" cssClass="form-control form-control-user"/>
+			                                    	<form:errors path="password" ></form:errors>
 			                                    </div>
 			                                    <div class="col-sm-6">
 			                                        <input type="password" class="form-control form-control-user"
-			                                            name="password-confirm" id="password-confirm" placeholder="비밀번호 확인">
+			                                            name="passwordConfirm" id="passwordConfirm" placeholder="비밀번호 확인">
+			                                        <form:errors path="passwordConfirm"></form:errors>
 			                                    </div>
 			                                </div>
 			                                <div class="form-group row">
 			                                    <div class="col-sm-12 mb-3 mb-sm-0">
-			                                        <input type="text" class="form-control form-control-user" 
-			                                        name="name" id="name" placeholder="이름">
+			                                    	<form:input path="name" placeholder="이름" cssClass="form-control form-control-user"/>
+			                                    	<form:errors path="name" ></form:errors>
 			                                    </div>
 			                                </div>
 			                                <div class="form-group">
-			                                    <input type="email" class="form-control form-control-user" 
-			                                    name="email" id="email" placeholder="이메일">
+			                                	<form:input path="email" placeholder="이메일" cssClass="form-control form-control-user"/>
+			                                	<form:errors path="email" ></form:errors>
 			                                </div>
 			                                <div class="form-group">
-			                                    <input type="text" class="form-control form-control-user" 
-			                                    name="phone" id="phone" placeholder="전화번호">
+			                                	<form:input path="phone" placeholder="전화번호" cssClass="form-control form-control-user"/>
+			                                	<form:errors path="phone" ></form:errors>
 			                                </div>
 			                                <div class="form-group">
 			                                    <input type="date" class="form-control form-control-user" 
 			                                    name="birth" id="birth" placeholder="생일">
+			                                    <form:errors path="birth"></form:errors>
 			                                </div>
 			                                 <div class="form-group">
 			                              	 	<input type="file" class="form-control form-control-user" name="attaches">
 			                                </div>
 			                                <button class="btn btn-primary btn-user btn-block">가입</button>
-			                            </form>
+			                            </form:form>
 			                            <hr>
-			                            <div class="text-center">
-			                                <a class="small" href="forgot-password.html">비밀번호찾기</a>
-			                            </div>
-			                            <div class="text-center">
-			                                <a class="small" href="login.html">아이디가 이미 있으신가요?</a>
-			                            </div>
 			                        </div>
 			                    </div>
 			                </div>

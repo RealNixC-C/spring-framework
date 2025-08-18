@@ -76,5 +76,9 @@
 		</where>
 	</delete>
 	
+	<select id="memberList" resultMap="memberResultMap">
+		SELECT member_id FROM members
+	</select>
+	
 </mapper>
 

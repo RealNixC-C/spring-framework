@@ -59,7 +59,7 @@
                                         <a class="small" href="forgot-password.html">비밀번호찾기</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">회원가입</a>
+                                        <a class="small" href="/member/join">회원가입</a>
                                     </div>
                                 </div>
                             </div>

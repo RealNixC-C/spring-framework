@@ -24,7 +24,7 @@ public class FilterConfig implements WebMvcConfigurer {
 		
 	}
 	
-	@Bean
+	//@Bean
 	FilterRegistrationBean<Filter> checkIfAdmin() {
 		FilterRegistrationBean<Filter> fr = new FilterRegistrationBean<Filter>();
 		// 필터 객체 생성

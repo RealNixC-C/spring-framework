@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,6 +17,7 @@ import lombok.ToString;
 public class BoardVO {
 
 	private Long boardNo;
+	@NotBlank
 	private String boardTitle;
 	private String boardContent;
 	private String boardWriter;

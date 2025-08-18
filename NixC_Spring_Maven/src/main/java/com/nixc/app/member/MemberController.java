@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.nixc.app.products.ProductVO;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -44,6 +46,7 @@ public class MemberController {
 	
 	@PostMapping("login")
 	public String login(MemberVO memberVO, HttpSession session) throws Exception{
+		
 		memberVO = memberService.login(memberVO);
 		if(memberVO != null) {
 			session.setAttribute("member", memberVO);
@@ -54,13 +57,19 @@ public class MemberController {
 	}
 	
 	@GetMapping("join")
-	public String join() {
+	public String join(MemberVO memberVO) {
 		
 		return "member/join";
 	}
 	
 	@PostMapping("join")
-	public String join(Model model, MemberVO memberVO, MultipartFile attaches) throws Exception{
+	public String join(Model model, @Valid MemberVO memberVO, BindingResult bindingResult, MultipartFile attaches) throws Exception{
+		
+		boolean check = memberService.hasMemberError(memberVO, bindingResult);
+		
+		if(check) {
+			return "member/join";
+		}
 		
 		int result = memberService.insert(memberVO, attaches);
 		

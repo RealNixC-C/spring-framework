@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nixc.app.commons.FileManager;
@@ -29,6 +30,37 @@ public class MemberService {
 	
 	@Value("${app.upload}")
 	private String upload;
+	
+	// 검증 메서드
+	public boolean hasMemberError(MemberVO memberVO, BindingResult bindingResult) throws Exception {
+		
+		boolean hasError = false;
+		// check: true => 검증실패
+		// check: false => 검증통과
+		
+		// 1. Annotation 검증
+		hasError = bindingResult.hasErrors();
+		
+		// 2. 사용자 정의로 패스워드가 일치하는지 검증
+		if(!memberVO.getPassword().equals(memberVO.getPasswordConfirm())) {
+			bindingResult.rejectValue("passwordConfirm", "join.password.notEqual");
+			
+			hasError = true;
+		}
+		
+		// 3. ID 중복 검사
+		List<MemberVO> memList = memberDao.memberList();
+		if(memList != null && memList.size() != 0) {
+			for (MemberVO member : memList) {
+				if(member.getMemberId().equals(memberVO.getMemberId())) {
+					bindingResult.rejectValue("memberId", "join.memberId.duplicate");
+					hasError = true;
+					break;
+				}
+			}
+		}
+		return hasError;
+	}
 	
 	public int insert(MemberVO memberVO, MultipartFile attaches) throws Exception {
 		int result = memberDao.insert(memberVO);
