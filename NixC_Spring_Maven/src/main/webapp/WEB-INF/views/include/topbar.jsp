@@ -190,4 +190,9 @@
 			<li class="nav-item"><a class="btn btn-primary ml-2" href="/member/join">회원가입</a></li>
 		</ul>
 	</c:if>
+	<ul>
+		<li><a href="/?lang=ko">KO</a></li>
+		<li><a href="/?lang=en">EN</a></li>
+	</ul>
 </nav>
+
