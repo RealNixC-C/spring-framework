@@ -55,17 +55,9 @@ public class ProductsController {
 			msg = "등록 성공";
 		}
 		
-//		ModelAndView mv = new ModelAndView();
-//		mv.addObject("msg", msg);
-//		mv.addObject("url", url);
-//		
-//		mv.setViewName("commons/result");
-		
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		return "commons/result";
-		
-//		return mv;
 	}
 	
 	@GetMapping("update")

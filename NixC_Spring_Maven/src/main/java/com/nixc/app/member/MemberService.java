@@ -7,6 +7,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -17,7 +21,7 @@ import com.nixc.app.products.ProductVO;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class MemberService {
+public class MemberService implements UserDetailsService {
 
 	@Autowired
 	private MemberDao memberDao;
@@ -30,6 +34,25 @@ public class MemberService {
 	
 	@Value("${app.upload}")
 	private String upload;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		MemberVO memberVO = new MemberVO();
+		// 직접 비밀먼호를 비교하고 싶은경우
+//		passwordEncoder.matches(memberVO.getPassword(), passwordEncoder.encode("test"));
+		memberVO.setMemberId(username);
+		System.out.println("로그인 서비스");
+		try {
+			memberVO = memberDao.login(memberVO);
+			return memberVO;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	// 검증 메서드
 	public boolean hasMemberError(MemberVO memberVO, BindingResult bindingResult) throws Exception {
@@ -60,6 +83,9 @@ public class MemberService {
 	}
 	
 	public int insert(MemberVO memberVO, MultipartFile attaches) throws Exception {
+		// 비밀번호 암호화
+		memberVO.setPassword(passwordEncoder.encode(memberVO.getPassword()));
+		
 		int result = memberDao.insert(memberVO);
 		
 		ProfileVO profileVO = new ProfileVO();
@@ -84,16 +110,17 @@ public class MemberService {
 		return memberDao.update(memberVO);
 	}
 	
-	public MemberVO login(MemberVO memberVO) throws Exception {
-		MemberVO checkVO = memberDao.login(memberVO);
-		
-		if(checkVO != null && memberVO.getPassword().equals(checkVO.getPassword())) {
-			
-			return checkVO;
-		}
-		
-		return null;
-	}
+	// security에서 처리
+//	public MemberVO login(MemberVO memberVO) throws Exception {
+//		MemberVO checkVO = memberDao.login(memberVO);
+//		
+//		if(checkVO != null && memberVO.getPassword().equals(checkVO.getPassword())) {
+//			
+//			return checkVO;
+//		}
+//		
+//		return null;
+//	}
 	
 	public List<ProductVO> cartList (MemberVO memberVO) throws Exception {
 		// 나중에 페이징 처리 해야 함 

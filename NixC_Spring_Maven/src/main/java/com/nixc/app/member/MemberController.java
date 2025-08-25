@@ -53,17 +53,18 @@ public class MemberController {
 		return "member/login";
 	}
 	
-	@PostMapping("login")
-	public String login(MemberVO memberVO, HttpSession session) throws Exception{
-		
-		memberVO = memberService.login(memberVO);
-		if(memberVO != null) {
-			session.setAttribute("member", memberVO);
-			log.info("memberVO : {}",memberVO);
-		}
-		
-		return "index";
-	}
+	// 로그인 security 추가하면서 주석처리함
+//	@PostMapping("login")
+//	public String login(MemberVO memberVO, HttpSession session) throws Exception{
+//		
+//		memberVO = memberService.login(memberVO);
+//		if(memberVO != null) {
+//			session.setAttribute("member", memberVO);
+//			log.info("memberVO : {}",memberVO);
+//		}
+//		
+//		return "index";
+//	}
 	
 	@GetMapping("join")
 	public String join(MemberVO memberVO) {
@@ -99,37 +100,38 @@ public class MemberController {
 		return "member/memberUpdate";
 	}
 	
-	@PostMapping("update")
-	public String update(@Validated(UpdateGroup.class) MemberVO memberVO, BindingResult bindingResult, MultipartFile profile, HttpSession session) throws Exception {
-		
-		if(bindingResult.hasErrors()) {
-			return "member/memberUpdate";
-		}
-		MemberVO VO = (MemberVO)session.getAttribute("member");
-		memberVO.setMemberId(VO.getMemberId());
-		int result = memberService.update(memberVO);
-		
-		if(result > 0) {
-			memberVO.setPassword(VO.getPassword());
-			memberVO = memberService.login(memberVO);
-			session.setAttribute("member", memberVO);
-		}
-		
-		return "redirect:./detail";
-	}
+//	@PostMapping("update")
+//	public String update(@Validated(UpdateGroup.class) MemberVO memberVO, BindingResult bindingResult, MultipartFile profile, HttpSession session) throws Exception {
+//		
+//		if(bindingResult.hasErrors()) {
+//			return "member/memberUpdate";
+//		}
+//		MemberVO VO = (MemberVO)session.getAttribute("member");
+//		memberVO.setMemberId(VO.getMemberId());
+//		int result = memberService.update(memberVO);
+//		
+//		if(result > 0) {
+//			memberVO.setPassword(VO.getPassword());
+//			memberVO = memberService.login(memberVO);
+//			session.setAttribute("member", memberVO);
+//		}
+//		
+//		return "redirect:./detail";
+//	}
 	
-	@GetMapping("logout")
-	public String logout(HttpSession session) throws Exception {
-		
+	// Spring Security로 넘김
+//	@GetMapping("logout")
+//	public String logout(HttpSession session) throws Exception {
+//		
 		// 로그인 세션 지우는법
 		// 방법 1
 //		session.removeAttribute("member");
 		
 		// 방법 2
-		 session.invalidate();
-		
-		return "redirect:/";
-	}
+//		 session.invalidate();
+//		
+//		return "redirect:/";
+//	}
 	
 	@GetMapping("detail")
 	public String detail() throws Exception {
