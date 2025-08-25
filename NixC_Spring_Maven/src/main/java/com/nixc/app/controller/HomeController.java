@@ -28,7 +28,7 @@ public class HomeController {
         this.interceptorConfig = interceptorConfig;
     }
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@GetMapping("/")
 	public String home(HttpSession session) {
 //		Enumeration<String> keys = session.getAttributeNames();
 //		

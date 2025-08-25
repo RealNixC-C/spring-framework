@@ -1,11 +1,16 @@
 package com.nixc.app.member;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -93,31 +98,39 @@ public class MemberController {
 	}
 	
 	@GetMapping("update")
-	public String update(HttpSession session, Model model) {
-		MemberVO memberVO = (MemberVO)session.getAttribute("member");
+	public String update(HttpSession session, Model model, Principal principal) {
+		
+//		MemberVO memberVO = (MemberVO)session.getAttribute("member");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		MemberVO memberVO = (MemberVO) authentication.getPrincipal();
 		model.addAttribute("memberVO", memberVO);
 		
 		return "member/memberUpdate";
 	}
 	
-//	@PostMapping("update")
-//	public String update(@Validated(UpdateGroup.class) MemberVO memberVO, BindingResult bindingResult, MultipartFile profile, HttpSession session) throws Exception {
-//		
-//		if(bindingResult.hasErrors()) {
-//			return "member/memberUpdate";
-//		}
-//		MemberVO VO = (MemberVO)session.getAttribute("member");
-//		memberVO.setMemberId(VO.getMemberId());
-//		int result = memberService.update(memberVO);
-//		
-//		if(result > 0) {
-//			memberVO.setPassword(VO.getPassword());
-//			memberVO = memberService.login(memberVO);
-//			session.setAttribute("member", memberVO);
-//		}
-//		
-//		return "redirect:./detail";
-//	}
+	@PostMapping("update")
+	public String update(@Validated(UpdateGroup.class) MemberVO memberVO, BindingResult bindingResult, MultipartFile profile, HttpSession session) throws Exception {
+		
+		if(bindingResult.hasErrors()) {
+			return "member/memberUpdate";
+		}
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		MemberVO VO = (MemberVO) authentication.getPrincipal();
+		memberVO.setMemberId(VO.getMemberId());
+		int result = memberService.update(memberVO);
+		
+		if(result > 0) {
+			// memberId로 조회한 VO를 UserDetail로 반환받아옴
+			UserDetails userDetails = memberService.loadUserByUsername(VO.getMemberId());
+			// SecurityContextHolder에 담긴 세션정보를 바꾸기 위한 객체선언 및 인자값 부여
+			// (principal, password, authorities(memberVO안에 override한 메서드있음))
+			UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+			
+			SecurityContextHolder.getContext().setAuthentication(newAuth);
+		}
+		
+		return "redirect:./detail";
+	}
 	
 	// Spring Security로 넘김
 //	@GetMapping("logout")

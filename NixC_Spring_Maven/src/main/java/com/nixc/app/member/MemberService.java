@@ -122,6 +122,7 @@ public class MemberService implements UserDetailsService {
 //		return null;
 //	}
 	
+	
 	public List<ProductVO> cartList (MemberVO memberVO) throws Exception {
 		// 나중에 페이징 처리 해야 함 
 		
