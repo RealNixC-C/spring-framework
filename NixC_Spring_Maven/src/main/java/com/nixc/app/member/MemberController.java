@@ -53,12 +53,15 @@ public class MemberController {
 	}
 	
 	@GetMapping("login")
-	public String login() throws Exception {
-		
-		return "member/login";
+	public String login(Principal principal) throws Exception {
+		if(principal != null) {
+			return "redirect:/";
+		} else {
+			return "member/login";
+		}
 	}
 	
-	// 로그인 security 추가하면서 주석처리함
+	// 로그인 security 추가하면서 필요없어짐
 //	@PostMapping("login")
 //	public String login(MemberVO memberVO, HttpSession session) throws Exception{
 //		
@@ -72,9 +75,13 @@ public class MemberController {
 //	}
 	
 	@GetMapping("join")
-	public String join(MemberVO memberVO) {
+	public String join(MemberVO memberVO, Principal principal) {
+		if(principal != null) {
+			return "redirect:/";
+		} else {
+			return "member/join";
+		}
 		
-		return "member/join";
 	}
 	
 	@PostMapping("join")

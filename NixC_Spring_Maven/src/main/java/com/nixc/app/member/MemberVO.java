@@ -66,6 +66,4 @@ public class MemberVO implements UserDetails {
 		return this.memberId;
 	}
 	
-	
-	
 }
