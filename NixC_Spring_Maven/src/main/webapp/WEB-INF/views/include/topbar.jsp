@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
   <!-- Sidebar Toggle (Topbar) -->
@@ -21,7 +22,8 @@
       </div>
   </form>
 
-  <c:if test="${ not empty member }">
+  <sec:authentication property="principal" var="member"/>
+  <sec:authorize access="isAuthenticated()">
   <!-- Topbar Navbar -->
   <ul class="navbar-nav ml-auto">
       <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -181,13 +183,13 @@
             </div>
         </li>
     </ul>
-	</c:if>
+	</sec:authorize>
 	
-	<c:if test="${ empty member }">
+	<sec:authorize access="!isAuthenticated()">
 		<ul class="navbar-nav ml-auto">
 			<li class="nav-item"><a class="btn btn-primary col-md" href="/member/login">로그인</a></li>
 			<li class="nav-item"><a class="btn btn-primary ml-2 col-md" href="/member/join">회원가입</a></li>
 		</ul>
-	</c:if>
+	</sec:authorize>
 </nav>
 

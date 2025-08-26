@@ -45,14 +45,11 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">아이디기억</label>
+                                                <input type="checkbox" class="custom-control-input" value="1" name="rememberId" id="rememberId">
+                                                <label class="custom-control-label" for="rememberId">아이디기억</label>
                                             </div>
                                         </div>
                                         <button class="btn btn-primary btn-user btn-block">로그인</button>
-                                        <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block"><i class="fab fa-google fa-fw"></i> 구글계정 로그인</a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block"><i class="fab fa-facebook-f fa-fw"></i> 페이스북계정 로그인</a>
                                     </form>
                                     <hr>
                                     <div class="text-center">

@@ -7,6 +7,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -17,7 +21,7 @@ import com.nixc.app.products.ProductVO;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class MemberService {
+public class MemberService implements UserDetailsService {
 
 	@Autowired
 	private MemberDao memberDao;
@@ -30,6 +34,30 @@ public class MemberService {
 	
 	@Value("${app.upload}")
 	private String upload;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
+	
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		MemberVO memberVO = new MemberVO();
+		
+		memberVO.setMemberId(username);
+		try {
+			memberVO = memberDao.login(memberVO);
+			System.out.println(memberVO.getPassword());
+			System.out.println(memberVO.isAccountNonExpired());
+			System.out.println(memberVO.isAccountNonLocked());
+			System.out.println(memberVO.isCredentialsNonExpired());
+			System.out.println(memberVO.isEnabled());
+			return memberVO;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+		
+	}
 	
 	// 검증 메서드
 	public boolean hasMemberError(MemberVO memberVO, BindingResult bindingResult) throws Exception {
@@ -60,6 +88,8 @@ public class MemberService {
 	}
 	
 	public int insert(MemberVO memberVO, MultipartFile attaches) throws Exception {
+//		memberVO.setPassword();
+		
 		int result = memberDao.insert(memberVO);
 		
 		ProfileVO profileVO = new ProfileVO();

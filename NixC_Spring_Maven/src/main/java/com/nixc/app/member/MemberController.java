@@ -53,18 +53,6 @@ public class MemberController {
 		return "member/login";
 	}
 	
-	@PostMapping("login")
-	public String login(MemberVO memberVO, HttpSession session) throws Exception{
-		
-		memberVO = memberService.login(memberVO);
-		if(memberVO != null) {
-			session.setAttribute("member", memberVO);
-			log.info("memberVO : {}",memberVO);
-		}
-		
-		return "index";
-	}
-	
 	@GetMapping("join")
 	public String join(MemberVO memberVO) {
 		
