@@ -123,6 +123,11 @@ public class SecurityConfig {
 					.expiredUrl("/member/login")
 					;
 			})
+			.oauth2Login((o) -> {
+				o.userInfoEndpoint((user)->{
+					user.userService(memberService);
+				});
+			})
 			;
 		
 		// 위에 추가한 결과물을 빌드하면 최종적으로 SecurityFilterChain타입이됨 그 값을 반환

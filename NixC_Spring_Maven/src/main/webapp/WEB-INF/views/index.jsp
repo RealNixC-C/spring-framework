@@ -22,16 +22,14 @@
 				<div class="container-fluid">
 					<!-- page content 내용 -->
 					<h1>Index</h1>
-					<h3>
-						<spring:message code="welcome.message2" text="hi"></spring:message>
-					</h3>
-					<sec:authorize access="isAuthenticated()">
-							<sec:authentication property="principal" var="member"/>
-							<h3>${ member.name }</h3>
-<!-- 						<h3> -->
-							<spring:message code="user.info" arguments="${ member.memberId }, ${ member.email }" argumentSeparator=","/>
-<!-- 						</h3> -->
-					</sec:authorize>
+<!-- 					<h3> -->
+<%-- 						<spring:message code="welcome.message2" text="hi"></spring:message> --%>
+<!-- 					</h3> -->
+<%-- 					<sec:authorize access="isAuthenticated()"> --%>
+<%-- 							<sec:authentication property="principal" var="member"/> --%>
+<%-- 							<h3>${ member.name }</h3> --%>
+<%-- 							<spring:message code="user.info" arguments="${ member.memberId }, ${ member.email }" argumentSeparator=","/> --%>
+<%-- 					</sec:authorize> --%>
 				</div>
 			</div>
 		<!-- End Content -->

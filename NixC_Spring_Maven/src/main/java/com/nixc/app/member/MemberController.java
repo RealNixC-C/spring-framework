@@ -194,4 +194,9 @@ public class MemberController {
 		return "redirect:./cartList";
 	}
 	
+	@GetMapping("kakaoLogin")
+	public void kakaoLogin() throws Exception {
+		
+	}
+	
 }

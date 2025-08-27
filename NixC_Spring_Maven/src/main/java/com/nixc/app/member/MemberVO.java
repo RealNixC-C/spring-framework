@@ -4,10 +4,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.nixc.app.member.validation.AddGroup;
 import com.nixc.app.member.validation.UpdateGroup;
@@ -24,7 +26,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MemberVO implements UserDetails {
+public class MemberVO implements UserDetails, OAuth2User {
 
 	@NotBlank(message = "아이디를 입력하세요", groups = AddGroup.class)
 	private String memberId;
@@ -52,6 +54,11 @@ public class MemberVO implements UserDetails {
 	
 	private ProfileVO profileVO;
 	private List<RoleVO> roleVOs;
+	
+	// --------------------------- Social
+	private Map<String, Object> attributes;
+	private String accessToken;
+	private String sns;
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

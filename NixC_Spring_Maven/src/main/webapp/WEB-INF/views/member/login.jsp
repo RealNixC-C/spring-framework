@@ -57,6 +57,8 @@
                                         <button class="btn btn-primary btn-user btn-block">로그인</button>
                                     </form>
                                     <hr>
+                                    <a href="/oauth2/authorization/kakao" class="btn btn-facebook btn-user btn-block" style="background-color: #FEE500;">카카오로그인</a>
+                                    <hr>
                                     <div class="text-center">
                                         <a class="small" href="forgot-password.html">비밀번호찾기</a>
                                     </div>
