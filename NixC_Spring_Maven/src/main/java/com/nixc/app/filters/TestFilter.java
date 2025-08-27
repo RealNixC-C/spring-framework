@@ -46,9 +46,7 @@ public class TestFilter implements Filter {
 		// TODO Auto-generated method stub
 		// place your code here
 		// pass the request along the filter chain
-		System.out.println("Test Fileter In");
 		chain.doFilter(request, response);
-		System.out.println("Test Fileter Out");
 	}
 
 	/**
