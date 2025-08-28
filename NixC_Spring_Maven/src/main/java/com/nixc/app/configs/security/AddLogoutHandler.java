@@ -27,31 +27,25 @@ public class AddLogoutHandler implements LogoutHandler {
 	@Value("${http://localhost/member/logout}")
 	private String uri;
 	
+	@Value("${spring.security.oauth2.client.registration.kakao.client-secret}")
+	private String adminKey;
+	
 	@Override
 	public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 		// 소셜 로그인인지 확인
-		if(authentication instanceof OAuth2AuthenticationToken) {
-			MemberVO memberVO = (MemberVO)authentication.getPrincipal();
-			if(memberVO.getSns().toUpperCase().equals("KAKAO")) {
-				this.useKakao(memberVO);
+		try {
+			
+			if(authentication instanceof OAuth2AuthenticationToken) {
+				MemberVO memberVO = (MemberVO)authentication.getPrincipal();
+				if(memberVO.getSns().toUpperCase().equals("KAKAO")) {
+					this.useKakao(memberVO);
+				}
 			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e.getMessage());
 		}
-	}
-	
-	private void useKakao(MemberVO memberVO) {
-		WebClient webClient = WebClient.create();
-		Map<String, Object> param = new HashMap<>();
-		param.put("target_id_type", "user_id");
-		param.put("target_id", memberVO.getName());
-		log.info("logout:");
-		Mono<String> result = webClient.post()
-									.uri("https://kapi.kakao.com/v1/user/logout")
-									.header("Authorization", "Bearer "+memberVO.getAccessToken())
-									.bodyValue(param)
-									.retrieve()
-									.bodyToMono(String.class);
-		
-		log.info("logout : {}", result.block());
 	}
 	
 	private void useWithKakao(MemberVO memberVO) {
@@ -65,6 +59,24 @@ public class AddLogoutHandler implements LogoutHandler {
 		log.info("Logout 2 {}", result.block());
 	}
 	
+	private void useKakao(MemberVO memberVO) {
+			
+			//parameter
+			Map<String, Object> param = new HashMap<>();
+			param.put("target_id_type", "user_id");
+			param.put("target_id", memberVO.getName());
+			log.info("logout");
+			WebClient webClient = WebClient.create();
+			
+			Mono<String> result = webClient.post()
+					 .uri("https://kapi.kakao.com/v1/user/logout")
+					 .header("Authorization", "KakaoAK " + adminKey)
+					 .bodyValue(param)
+					 .retrieve()
+					 .bodyToMono(String.class);
+					 
+			log.info("Logout : {}", result.block());
+		}
 	
 	
 	

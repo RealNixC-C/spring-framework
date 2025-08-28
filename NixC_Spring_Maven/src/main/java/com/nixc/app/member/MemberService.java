@@ -68,15 +68,19 @@ public class MemberService extends DefaultOAuth2UserService implements UserDetai
 		log.info("{}", user.getAuthorities());
 		Map<String, Object> map = user.getAttributes();
 		log.info("{}", map.get("properties").getClass().getName());
-		LinkedHashMap<String, Object> m = (LinkedHashMap<String, Object>)map.get("properties");
+		LinkedHashMap<String, Object> m = (LinkedHashMap<String, Object>) map.get("properties");
 		
 		MemberVO memberVO = new MemberVO();
 		memberVO.setAccessToken(userRequest.getAccessToken().getTokenValue());
 		
+		memberVO.setName(user.getName());
+		
 		memberVO.setMemberId(m.get("nickname").toString());
 		
 		ProfileVO profileVO = new ProfileVO();
-		profileVO.setSaveName(m.get("profile_image").toString());
+		if(m.get("profile_image") != null) {
+			profileVO.setSaveName(m.get("profile_image").toString());
+		}
 		memberVO.setProfileVO(profileVO);
 		
 		List<RoleVO> list = new ArrayList<>();
@@ -194,6 +198,10 @@ public class MemberService extends DefaultOAuth2UserService implements UserDetai
 		map.put("list", Arrays.asList(productNo));
 		
 		return memberDao.deleteCart(map);
+	}
+	
+	public void disconnect(MemberVO memberVO) throws Exception {
+		
 	}
 	
 }

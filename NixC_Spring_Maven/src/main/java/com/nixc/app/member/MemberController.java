@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.nixc.app.account.AccountController;
 import com.nixc.app.member.validation.AddGroup;
@@ -29,6 +31,7 @@ import com.nixc.app.products.ProductVO;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Mono;
 
 @Controller
 @RequestMapping(value="/member/*")
@@ -198,5 +201,31 @@ public class MemberController {
 	public void kakaoLogin() throws Exception {
 		
 	}
+	
+	@GetMapping("delete")
+	public String delete(@AuthenticationPrincipal MemberVO memberVO) throws Exception {
+		log.info("{}", memberVO);
+		
+		if(memberVO.getSns() == null) {
+			// service에서 삭제
+		} else if (memberVO.getSns().toUpperCase().equals("KAKAO")) {
+			// 연결해제
+			WebClient webClient = WebClient.create();
+			
+			Mono<String> result = webClient
+									.post()
+									.uri("https://kapi.kakao.com/v1/user/unlink")
+									.header("Authorization", "Bearer " + memberVO.getAccessToken())
+									.retrieve()
+									.bodyToMono(String.class)
+									;
+			log.info("delete Result : {}", result.block());
+			
+			// 연결 해제 후 로그아웃
+		}
+		
+		return "redirect:./logout";
+	}
+	
 	
 }

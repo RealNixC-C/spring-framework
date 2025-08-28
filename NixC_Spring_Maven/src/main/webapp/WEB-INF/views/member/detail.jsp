@@ -38,6 +38,9 @@
 						    <img src="/files/member/${member.profileVO.saveName}" alt="이미지">
 						</c:if>
 					</div>
+					<div>
+						<a href="./delete" class="btn btn-danger">회원탈퇴</a>
+					</div>
 				</div>
 			</div>
 			<!--  End Content  -->
