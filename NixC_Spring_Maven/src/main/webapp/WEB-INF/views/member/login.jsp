@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+\<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
@@ -34,7 +34,7 @@
                                         <h1 class="h4 text-gray-900 mb-4">로그인</h1>
                                     </div>
                                     <h5>${ param.failMessage }</h5>
-                                    <form class="user" method="post" action="">
+                                    <form class="user" method="post" action="loginProcess">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
                                                 id="memberId" name="memberId" aria-describedby="emailHelp"

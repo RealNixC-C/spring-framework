@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
@@ -31,6 +33,14 @@ public class SecurityConfig {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	// 개발자가 만든것
+	@Autowired
+	private JwtTokenManager jwtTokenManager;
+	
+	// Spring의 기능
+	@Autowired
+	private AuthenticationConfiguration authenticationConfiguration;
 	
 	@Bean
     ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
@@ -74,55 +84,22 @@ public class SecurityConfig {
 			// 사용자가 만든 form 관련 설정
 			// 개발자가 로그인 검증을 하지 않는다,  Security Filter에서 검증
 			.formLogin(form -> {
-				form
-					// login get과 post모드 적용
-					.loginPage("/member/login")
-					// 필드명이 username과 password라면 생략가능 
-					.usernameParameter("memberId")
-					.passwordParameter("password")
-					// 로그인이 성공했을 경우 보낼 url
-//					.defaultSuccessUrl("/")		// redirect
-//					.successForwardUrl(null)		// forward
-					.successHandler(loginSuccessHandler)		// defaultSuccessUrl과 동시에 사용불가
-//					.failureUrl("/member/login")
-					.failureHandler(failureHandler)
-					;
+				form.disable()
+				;
 			})
-			// logout 설정
-			// 개발자가 아닌 Security Filter에서 처리
-			.logout(logout -> {
-				logout
-					// logout할 url
-					.logoutUrl("/member/logout")
-					.addLogoutHandler(addLogoutHandler)
-					.logoutSuccessHandler(addLogoutSuccessHandler)
-					// session을 소멸
-					.invalidateHttpSession(true)
-					// 관련된 cookie를 삭제
-					.deleteCookies("JSESSIONID")
-					// 로그아웃 성공시 이동할 url
-//					.logoutSuccessUrl("/")
-					;
-			})
-			.rememberMe(remember -> {
-				remember
-					// remember-me가 기본값 만약 다르다면 명시적으로 설정해야함
-					.rememberMeParameter("remember-me")
-					.tokenValiditySeconds(60)
-					.key("rememberKey")
-					.userDetailsService(memberService)
-					.authenticationSuccessHandler(loginSuccessHandler)
-					.useSecureCookie(false)
-					;
-			})
+//			.httpBasic(httpBasic -> {
+//				httpBasic
+//			})
+			// Session 인증방식이 아닌
+			// Token을 인증방식이기 때문에 Session을 사용하지 않음
 			.sessionManagement(s -> {
-				s
-					.invalidSessionUrl("/member/login")
-					.maximumSessions(1)
-					.maxSessionsPreventsLogin(false) // false : 이전 사용자 X, true: 현재 접속사용자X
-					.expiredUrl("/member/login")
-					;
+				// 세션 생성방식을 사용하지 않음
+				s.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				;
 			})
+			//
+			.addFilter(new JwtLoginFilter(authenticationConfiguration.getAuthenticationManager(), jwtTokenManager))
+			// 소셜 로그인
 			.oauth2Login((o) -> {
 				o.userInfoEndpoint((user)->{
 					user.userService(memberService);
