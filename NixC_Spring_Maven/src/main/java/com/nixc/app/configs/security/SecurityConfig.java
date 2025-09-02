@@ -41,7 +41,7 @@ public class SecurityConfig {
 	// Spring의 기능
 	@Autowired
 	private AuthenticationConfiguration authenticationConfiguration;
-	
+
 	@Bean
     ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
         return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher());
@@ -87,6 +87,14 @@ public class SecurityConfig {
 				form.disable()
 				;
 			})
+			.logout(logout -> {
+				logout
+					.logoutUrl("/member/logout")
+					.invalidateHttpSession(true)
+					.deleteCookies("accessToken")
+					.logoutSuccessUrl("/")
+					;
+			})
 //			.httpBasic(httpBasic -> {
 //				httpBasic
 //			})
@@ -99,6 +107,7 @@ public class SecurityConfig {
 			})
 			//
 			.addFilter(new JwtLoginFilter(authenticationConfiguration.getAuthenticationManager(), jwtTokenManager))
+			.addFilter(new JwtAuthenticationFilter(authenticationConfiguration.getAuthenticationManager(), jwtTokenManager))
 			// 소셜 로그인
 			.oauth2Login((o) -> {
 				o.userInfoEndpoint((user)->{

@@ -146,12 +146,12 @@ public class MemberController {
 //	@GetMapping("logout")
 //	public String logout(HttpSession session) throws Exception {
 //		
-		// 로그인 세션 지우는법
-		// 방법 1
+//		// 로그인 세션 지우는법
+//		// 방법 1
 //		session.removeAttribute("member");
-		
-		// 방법 2
-//		 session.invalidate();
+//		
+//		// 방법 2
+//		session.invalidate();
 //		
 //		return "redirect:/";
 //	}

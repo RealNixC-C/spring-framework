@@ -1,16 +1,20 @@
 package com.nixc.app.configs.security;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Date;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import com.nixc.app.member.MemberDao;
+import com.nixc.app.member.MemberVO;
+
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -34,6 +38,10 @@ public class JwtTokenManager {
 	// javax.crypto.SecretKey클래스
 	private SecretKey key;
 	
+	// 검증한 토큰의 값으로 DB에서 정보를 조회후 다시 세션에 넣기 위함
+	@Autowired
+	private MemberDao memberDao;
+	
 	// 생성자에서 코드 작성 가능. 초기화용
 	// @PostConstruct = 생성자 호출전에 실행
 	@PostConstruct
@@ -52,18 +60,39 @@ public class JwtTokenManager {
 		return Jwts
 				.builder()
 				// 사용자 ID
-				.setSubject(authentication.getName()) // subject : 사용자의 ID(username)
+				.subject(authentication.getName()) // subject : 사용자의 ID(username)
 				// 권한 정보
 				.claim("roles", authentication.getAuthorities().toString())
-				.setIssuedAt(new Date()) // 토큰 생성 시간
-				.setExpiration(new Date(System.currentTimeMillis() + tokenValidTime)) // 현재 시간 기준으로 3분 후
-				.setIssuer(issuer) // 발급자
+				.issuedAt(new Date()) // 토큰 생성 시간
+				.expiration(new Date(System.currentTimeMillis() + tokenValidTime)) // 현재 시간 기준으로 3분 후
+				.issuer(issuer) // 발급자
 				.signWith(key) // 만들어둔 키
 				.compact() // 전체를 String Type으로 변환
 				;
 	}
 	
-	
+	// Token 검증
+	public Authentication getAuthenticationByToken(String token) throws Exception {
+		// 검증 - 여기서 실패시 Exception 발생
+		Claims claims = Jwts
+				.parser()
+				.verifyWith(key)
+				.build()
+				.parseSignedClaims(token)
+				.getPayload()
+				;
+		
+		// 어기까지 오면 검증 통과
+		// claims에서 id를 꺼낸후 DB에서 조회
+		MemberVO memberVO = new MemberVO();
+		memberVO.setMemberId(claims.getSubject());
+		memberVO = memberDao.login(memberVO);
+		
+		// MemberVO(UserDetail)를 Authentication으로 변경
+		Authentication authentication = new UsernamePasswordAuthenticationToken(memberVO, null, memberVO.getAuthorities());
+		
+		return authentication; 
+	}
 	
 	
 	

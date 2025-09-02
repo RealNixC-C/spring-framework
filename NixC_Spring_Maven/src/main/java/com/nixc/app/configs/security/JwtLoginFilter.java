@@ -57,8 +57,11 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter{
 		
 		// 토큰을 쿠키에 담아 클라이언트로 보냄
 		Cookie cookie = new Cookie("accessToken", token);
+		cookie.setPath("/");
+		cookie.setMaxAge(180);
+		cookie.setHttpOnly(true);
 		response.addCookie(cookie);
-		
+		response.sendRedirect("/");
 	}
 	
 }
