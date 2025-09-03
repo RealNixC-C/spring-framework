@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -51,25 +52,35 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter{
 				e.printStackTrace();
 				
 				// Security Exception 또는 Malformed Exception 또는 Signature Exception : 유효하지 않는 JWT서명
-				// ExpiredJwt Exception		: 기간이 만료된 토큰 // 만료 예외일 경우 refresh token을 사용하는것도 고려
+				// ExpiredJwtException		: 기간이 만료된 토큰 // 만료 예외일 경우 refresh token을 사용하는것도 고려
 				// Unsupported Exception	: 지원되지 않는 토큰
 				// IllegalArgumentException	: 잘못된 토큰
+				
+				if(e instanceof ExpiredJwtException) {
+					for(Cookie cookie : cookies) {
+						if(cookie.getName().equals("refreshToken")) {
+							String newToken = cookie.getValue();
+							try {
+								Authentication authentication = jwtTokenManager.getAuthenticationByToken(newToken);
+								SecurityContextHolder.getContext().setAuthentication(authentication);
+								newToken = jwtTokenManager.createAccessToken(authentication);
+								
+								Cookie c = new Cookie("accessToken", newToken);
+								c.setPath("/");
+								c.setMaxAge(180);
+								c.setHttpOnly(true);
+								
+								response.addCookie(c);
+							} catch (Exception ex) {
+								ex.printStackTrace();
+							}
+						}
+					}
+				}
 			}
 		}
 		
 		chain.doFilter(request, response);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

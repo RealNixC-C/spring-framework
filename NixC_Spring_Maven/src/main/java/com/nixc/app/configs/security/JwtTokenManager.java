@@ -38,6 +38,9 @@ public class JwtTokenManager {
 	// javax.crypto.SecretKey클래스
 	private SecretKey key;
 	
+	@Value("${jwt.refreshTokenValidTime}")
+	private Long refreshTokenValidTime;
+	
 	// 검증한 토큰의 값으로 DB에서 정보를 조회후 다시 세션에 넣기 위함
 	@Autowired
 	private MemberDao memberDao;
@@ -55,7 +58,7 @@ public class JwtTokenManager {
 	// 토큰을 발급하여 String으로 반환
 	// 로그인성공시 (id와 password가 일치하여 성공한 경우) 토큰 발급
 	// 성공했으니 세션에있는 유저의 정보를 담고있느 Authentication 매개변수로받음
-	public String createToken(Authentication authentication) {
+	public String createToken(Authentication authentication, Long validTime) {
 		// 추가한 Jwt(Json Web Token)라이브러리 사용
 		return Jwts
 				.builder()
@@ -64,11 +67,19 @@ public class JwtTokenManager {
 				// 권한 정보
 				.claim("roles", authentication.getAuthorities().toString())
 				.issuedAt(new Date()) // 토큰 생성 시간
-				.expiration(new Date(System.currentTimeMillis() + tokenValidTime)) // 현재 시간 기준으로 3분 후
+				.expiration(new Date(System.currentTimeMillis() + validTime)) // 현재 시간 기준으로 3분 후
 				.issuer(issuer) // 발급자
 				.signWith(key) // 만들어둔 키
 				.compact() // 전체를 String Type으로 변환
 				;
+	}
+	
+	public String createAccessToken(Authentication authentication) {
+		return this.createToken(authentication, tokenValidTime);
+	}
+	
+	public String createRefreshToken(Authentication authentication) {
+		return this.createToken(authentication, refreshTokenValidTime);
 	}
 	
 	// Token 검증
@@ -93,13 +104,5 @@ public class JwtTokenManager {
 		
 		return authentication; 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }
