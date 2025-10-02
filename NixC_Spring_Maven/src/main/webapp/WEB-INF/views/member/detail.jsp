@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>    
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +12,7 @@
 <body id="page-top">
 	<div id="wrapper">
 		<c:import url="/WEB-INF/views/include/sidebar.jsp"></c:import>
-		
+		<sec:authentication property="principal" var="member"/>
 		<!-- Start  -->
 		<div id="content-wrapper" class="d-flex flex-column">
 			<div id="content">
@@ -36,6 +37,9 @@
 						<c:if test="${ member.profileVO.oriName ne 'default.jpg' }">
 						    <img src="/files/member/${member.profileVO.saveName}" alt="이미지">
 						</c:if>
+					</div>
+					<div>
+						<a href="./delete" class="btn btn-danger">회원탈퇴</a>
 					</div>
 				</div>
 			</div>

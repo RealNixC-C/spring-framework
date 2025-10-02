@@ -33,11 +33,12 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">로그인</h1>
                                     </div>
+                                    <h5>${ param.failMessage }</h5>
                                     <form class="user" method="post" action="">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
                                                 id="memberId" name="memberId" aria-describedby="emailHelp"
-                                                placeholder="아이디">
+                                                placeholder="아이디" value="${ cookie.rememberId.value }">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
@@ -45,15 +46,18 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">아이디기억</label>
+                                                <input type="checkbox" class="custom-control-input" value="1" name="rememberId" id="rememberId">
+                                                <label class="custom-control-label" for="rememberId">아이디기억</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox small">
+                                            	<input type="checkbox" class="custom-control-input" value="1" name="remember-me" id="remember-me">
+                                                <label class="custom-control-label" for="remember-me">자동 로그인</label>
                                             </div>
                                         </div>
                                         <button class="btn btn-primary btn-user btn-block">로그인</button>
-                                        <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block"><i class="fab fa-google fa-fw"></i> 구글계정 로그인</a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block"><i class="fab fa-facebook-f fa-fw"></i> 페이스북계정 로그인</a>
                                     </form>
+                                    <hr>
+                                    <a href="/oauth2/authorization/kakao" class="btn btn-facebook btn-user btn-block" style="background-color: #FEE500;">카카오로그인</a>
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="forgot-password.html">비밀번호찾기</a>

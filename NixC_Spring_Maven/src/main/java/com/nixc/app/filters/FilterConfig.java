@@ -25,16 +25,16 @@ public class FilterConfig implements WebMvcConfigurer {
 	}
 	
 	//@Bean
-	FilterRegistrationBean<Filter> checkIfAdmin() {
-		FilterRegistrationBean<Filter> fr = new FilterRegistrationBean<Filter>();
-		// 필터 객체 생성
-		fr.setFilter(new AdminCheckFilter());
-		// 지정할 url 패턴
-		fr.addUrlPatterns("/notice/add", "/notice/update", "/notice/delete");
-		// 순서지정
-		fr.setOrder(1);
-		
-		return fr;
-		
-	}
+//	FilterRegistrationBean<Filter> checkIfAdmin() {
+//		FilterRegistrationBean<Filter> fr = new FilterRegistrationBean<Filter>();
+//		// 필터 객체 생성
+//		fr.setFilter(new AdminCheckFilter());
+//		// 지정할 url 패턴
+//		fr.addUrlPatterns("/notice/add", "/notice/update", "/notice/delete");
+//		// 순서지정
+//		fr.setOrder(1);
+//		
+//		return fr;
+//		
+//	}
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
   <!-- Sidebar Toggle (Topbar) -->
@@ -21,7 +22,8 @@
       </div>
   </form>
 
-  <c:if test="${ not empty member }">
+  <sec:authorize access="isAuthenticated()">
+  <sec:authentication property="principal" var="member"/>
   <!-- Topbar Navbar -->
   <ul class="navbar-nav ml-auto">
       <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -150,13 +152,13 @@
       <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="mr-2 d-none d-lg-inline text-gray-600 small">${ member.memberId }</span>
-              <c:if test="${ empty member.profileVO.saveName ne 'default.jsg' }">
-              	<img class="img-profile rounded-circle" src="/file/member/${ member.profileVO.saveName }">
-              </c:if>
-              <c:if test="${ empty member.profileVO.saveName eq 'default.jsp' }">
-              	<img class="img-profile rounded-circle" src="/img/default.png">
-              </c:if>
+<%--               <span class="mr-2 d-none d-lg-inline text-gray-600 small">${ member.memberId }</span> --%>
+<%--               <c:if test="${ empty member.profileVO.saveName ne 'default.jsg' }"> --%>
+<%--               	<img class="img-profile rounded-circle" src="${ empty member.sns? '/files/member/' : ''}${ member.profileVO.saveName }"> --%>
+<%--               </c:if> --%>
+<%--               <c:if test="${ empty member.profileVO.saveName eq 'default.jsp' }"> --%>
+<!--               	<img class="img-profile rounded-circle" src="/img/default.png"> -->
+<%--               </c:if> --%>
           </a>
           <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -181,13 +183,13 @@
             </div>
         </li>
     </ul>
-	</c:if>
+	</sec:authorize>
 	
-	<c:if test="${ empty member }">
+	<sec:authorize access="!isAuthenticated()">
 		<ul class="navbar-nav ml-auto">
 			<li class="nav-item"><a class="btn btn-primary col-md" href="/member/login">로그인</a></li>
 			<li class="nav-item"><a class="btn btn-primary ml-2 col-md" href="/member/join">회원가입</a></li>
 		</ul>
-	</c:if>
+	</sec:authorize>
 </nav>
 

@@ -1,11 +1,17 @@
 package com.nixc.app.member;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.nixc.app.account.AccountController;
 import com.nixc.app.member.validation.AddGroup;
@@ -24,6 +31,7 @@ import com.nixc.app.products.ProductVO;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Mono;
 
 @Controller
 @RequestMapping(value="/member/*")
@@ -48,27 +56,35 @@ public class MemberController {
 	}
 	
 	@GetMapping("login")
-	public String login() throws Exception {
-		
-		return "member/login";
+	public String login(Principal principal) throws Exception {
+		if(principal != null) {
+			return "redirect:/";
+		} else {
+			return "member/login";
+		}
 	}
 	
-	@PostMapping("login")
-	public String login(MemberVO memberVO, HttpSession session) throws Exception{
-		
-		memberVO = memberService.login(memberVO);
-		if(memberVO != null) {
-			session.setAttribute("member", memberVO);
-			log.info("memberVO : {}",memberVO);
-		}
-		
-		return "index";
-	}
+	// 로그인 security 추가하면서 필요없어짐
+//	@PostMapping("login")
+//	public String login(MemberVO memberVO, HttpSession session) throws Exception{
+//		
+//		memberVO = memberService.login(memberVO);
+//		if(memberVO != null) {
+//			session.setAttribute("member", memberVO);
+//			log.info("memberVO : {}",memberVO);
+//		}
+//		
+//		return "index";
+//	}
 	
 	@GetMapping("join")
-	public String join(MemberVO memberVO) {
+	public String join(MemberVO memberVO, Principal principal) {
+		if(principal != null) {
+			return "redirect:/";
+		} else {
+			return "member/join";
+		}
 		
-		return "member/join";
 	}
 	
 	@PostMapping("join")
@@ -92,8 +108,11 @@ public class MemberController {
 	}
 	
 	@GetMapping("update")
-	public String update(HttpSession session, Model model) {
-		MemberVO memberVO = (MemberVO)session.getAttribute("member");
+	public String update(HttpSession session, Model model, Principal principal) {
+		
+//		MemberVO memberVO = (MemberVO)session.getAttribute("member");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		MemberVO memberVO = (MemberVO) authentication.getPrincipal();
 		model.addAttribute("memberVO", memberVO);
 		
 		return "member/memberUpdate";
@@ -105,31 +124,37 @@ public class MemberController {
 		if(bindingResult.hasErrors()) {
 			return "member/memberUpdate";
 		}
-		MemberVO VO = (MemberVO)session.getAttribute("member");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		MemberVO VO = (MemberVO) authentication.getPrincipal();
 		memberVO.setMemberId(VO.getMemberId());
 		int result = memberService.update(memberVO);
 		
 		if(result > 0) {
-			memberVO.setPassword(VO.getPassword());
-			memberVO = memberService.login(memberVO);
-			session.setAttribute("member", memberVO);
+			// memberId로 조회한 VO를 UserDetail로 반환받아옴
+			UserDetails userDetails = memberService.loadUserByUsername(VO.getMemberId());
+			// SecurityContextHolder에 담긴 세션정보를 바꾸기 위한 객체선언 및 인자값 부여
+			// (principal, password, authorities(memberVO안에 override한 메서드있음))
+			UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+			
+			SecurityContextHolder.getContext().setAuthentication(newAuth);
 		}
 		
 		return "redirect:./detail";
 	}
 	
-	@GetMapping("logout")
-	public String logout(HttpSession session) throws Exception {
-		
+	// Spring Security로 넘김
+//	@GetMapping("logout")
+//	public String logout(HttpSession session) throws Exception {
+//		
 		// 로그인 세션 지우는법
 		// 방법 1
 //		session.removeAttribute("member");
 		
 		// 방법 2
-		 session.invalidate();
-		
-		return "redirect:/";
-	}
+//		 session.invalidate();
+//		
+//		return "redirect:/";
+//	}
 	
 	@GetMapping("detail")
 	public String detail() throws Exception {
@@ -171,5 +196,36 @@ public class MemberController {
 		
 		return "redirect:./cartList";
 	}
+	
+	@GetMapping("kakaoLogin")
+	public void kakaoLogin() throws Exception {
+		
+	}
+	
+	@GetMapping("delete")
+	public String delete(@AuthenticationPrincipal MemberVO memberVO) throws Exception {
+		log.info("{}", memberVO);
+		
+		if(memberVO.getSns() == null) {
+			// service에서 삭제
+		} else if (memberVO.getSns().toUpperCase().equals("KAKAO")) {
+			// 연결해제
+			WebClient webClient = WebClient.create();
+			
+			Mono<String> result = webClient
+									.post()
+									.uri("https://kapi.kakao.com/v1/user/unlink")
+									.header("Authorization", "Bearer " + memberVO.getAccessToken())
+									.retrieve()
+									.bodyToMono(String.class)
+									;
+			log.info("delete Result : {}", result.block());
+			
+			// 연결 해제 후 로그아웃
+		}
+		
+		return "redirect:./logout";
+	}
+	
 	
 }
